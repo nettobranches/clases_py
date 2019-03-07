@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Examen</title>
+    {% load static %}
+    <script src="vue.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/mathjs@5.1.2/dist/math.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <style>
+    .exam-header{
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .title div:first-child{
+        font-size: 16px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    .title div:nth-child(2){
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: bolder;
+    }
+    .title div:nth-child(3){
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+    .title div:nth-child(4){
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .student-name {
+      margin-bottom: 15px;
+    }
+
+    .student-name div:first-child{
+        text-align: right;
+    }
+    .student-name div:nth-child(2){
+        border-bottom: 1px black solid;
+    }
+
+  </style>
+
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="exam-header">
+        <div class="row">
+          <div class="col-xs-2"> <img src="{% static "exams/ujed.png" %}" ></img> </div>
+          <div class="col-xs-8 title">
+            <div> universidad juarez del estado de durango</div>
+            <div> facultad de ciencias quimicas </div>
+            <div> fisica I </div>
+            <div> examen de unidad III 1º QFB 1º QBT  </div>
+
+           </div>
+          <div class="col-xs-2"> <img src="{% static "exams/fcq.png" %}" ></img> </div>
+        </div>
+      </div>
+
+      <div class="row student-name">
+        <div class="col-xs-2">
+          Nombre:
+        </div>
+        <div class="col-xs-6">
+          &nbsp;
+        </div>
+      </div>
+
+      <div id="app" class="row">
+        <div class="col-xs-12">
+          <ol>
+            {% for qitem in pregunta_list %}
+                <li>{{ qitem.getRandom }}</li>
+            {% endfor %}
+          </ol>
+
+
+        </div>
+      </div>
+
+    </div>
+
+
+
+  </body>
+</html>

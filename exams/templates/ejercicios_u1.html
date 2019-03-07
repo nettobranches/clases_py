@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <script src="vue.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/mathjs@5.1.2/dist/math.min.js"></script>
+
+  </head>
+  <body>
+    <div id="app">
+      <p>
+          1.	Una mujer camina {{p1.d1}} km hacia el Este y después ca­mina {{p1.d2}} km hacia el Norte, (a) Aplique el método del polígono para hallar su desplazamiento resultante
+      </p>
+      <p>
+          R {{pitagoras(p1.d1, p1.d2)}}
+      </p>
+      <p>
+        2.	 En la superficie de Marte, un vehículo se desplaza una distancia de {{p2.d1}} m a un ángulo de {{p2.a1}}°. Después vira y recorre una distancia de {{p2.d2}}m a un ángulo de {{p2.a2}}°. ¿Cuál fue su desplazamiento desde el punto de partida?
+      </p>
+      <p>
+          R {{pitagoras(p2.d1, p2.d2)}}
+      </p>
+      <p>
+        7.	Dos cuerdas Ay B están atadas a un gancho de amarre, de manera que se ha formado un ángulo de 60° entre las dos cuerdas. La tensión sobre la cuerda A es de {{p3.d1}} N y la tensión sobre la cuerda B es de {{p3.d2}} N. Utilice el método del paralelogramo para hallar la fuerza resultante sobre el gancho.
+      </p>
+      <p>
+          R {{pitagoras(p3.d1, p3.d2)}}
+      </p>
+      <p>
+        10.	Halle las componentes x y y de (a) un desplazamien­to de {{p4.d1}} km a {{p4.a1}}°, (b) una velocidad de {{p4.d2}} km/h a {{p4.a2}}° y (c) una fuerza de {{p4.d3}} N a {{p4.a3}}°.
+      </p>
+      <p>
+          R {{compX(p4.d1, p4.a1)}} {{compY(p4.d1, p4.a1)}}; {{compX(p4.d2, p4.a2)}} {{compY(p4.d2, p4.a2)}}; {{compX(p4.d3, p4.a3)}} {{compY(p4.d3, p4.a3)}}
+      </p>
+    </div>
+
+    <script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+          p1:{
+            d1: math.randomInt(1, 10),
+            d2: math.randomInt(1, 10),
+          },
+          p2:{
+            d1: math.randomInt(10, 100),
+            a1:180,
+            d2: 66,
+            a2: math.randomInt(10, 100),
+          },
+          p3:{
+            d1: math.randomInt(10, 100),
+            d2: math.randomInt(10, 100),
+          },
+          p4:{
+            // d1: 200,//math.randomInt(10, 999),
+            // a1:34,
+            // d2: 40,//math.randomInt(10, 999),
+            // a2: 120,
+            // d3: 50,//math.randomInt(10, 999),
+            // a3: 330,
+            d1: math.randomInt(10, 999),
+            a1: math.randomInt( 0, 360),
+            d2: math.randomInt(10, 999),
+            a2: math.randomInt( 0, 360),
+            d3: math.randomInt(10, 999),
+            a3: math.randomInt( 0, 360),
+          },
+        },
+        methods:{
+          pitagoras: function(a, b){
+            var suma = Math.pow( a,2)+ Math.pow(b,2 );
+            console.log(suma)
+            return Number((Math.sqrt( suma )).toFixed(2));
+          },
+          compX: function(d, a){
+            d = this.dirRX(a) * d;
+            a = this.convertAng(a);
+            // console.log('a', a);
+            a = math.unit(a, 'deg');
+            var comp_x = d * math.cos(a);
+            console.log(d,'* cos', math.cos(a), comp_x)
+            return Number(comp_x).toFixed(2);
+          },
+          compY: function(d, a){
+            d = this.dirRY(a) * d;
+            a = this.convertAng(a);
+            // console.log('a', a);
+            a = math.unit(a, 'deg');
+            var comp_y = d * math.sin(a);
+            console.log(d,'* sin', math.sin(a), comp_y)
+            return Number(comp_y).toFixed(2);
+          },
+          convertAng: function(a){
+              r = a;
+              if( a >270  ){
+                r = 360 - a;
+              }else if( a > 180){
+                r = 180 - a
+              }
+              else if( a > 90){
+                r = 180 - a
+              }
+              return r
+          },
+          dirRX: function(a){
+              r = 1;
+              if( a >90 && a < 270  ){
+                r = -1;
+              }
+              return r
+          },
+          dirRY: function(a){
+            r = 1;
+            if( a > 180  ){
+              r = -1;
+            }
+              return r
+          }
+        }
+    })
+    </script>
+  </body>
+</html>

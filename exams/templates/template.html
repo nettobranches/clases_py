@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Examen</title>
+
+    <script src="vue.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/mathjs@5.1.2/dist/math.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <style>
+    .exam-header{
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .title div:first-child{
+        font-size: 16px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    .title div:nth-child(2){
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: bolder;
+    }
+    .title div:nth-child(3){
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+    .title div:nth-child(4){
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .student-name {
+      margin-bottom: 15px;
+    }
+
+    .student-name div:first-child{
+        text-align: right;
+    }
+    .student-name div:nth-child(2){
+        border-bottom: 1px black solid;
+    }
+
+  </style>
+
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="exam-header">
+        <div class="row">
+          <div class="col-xs-2"> <img src="ujed.png" ></img> </div>
+          <div class="col-xs-8 title">
+            <div> universidad juarez del estado de durango</div>
+            <div> facultad de ciencias quimicas </div>
+            <div> fisica I </div>
+            <div> examen de unidad III 1º QFB 1º QBT  </div>
+
+           </div>
+          <div class="col-xs-2"> <img src="fcq.png" ></img> </div>
+        </div>
+      </div>
+
+      <div class="row student-name">
+        <div class="col-xs-2">
+          Nombre:
+        </div>
+        <div class="col-xs-6">
+          &nbsp;
+        </div>
+      </div>
+
+      <div id="app" class="row">
+        <div class="col-xs-12">
+          <ol>
+            <li v-for="preg in preguntas" >
+              {{ setRandom(preg) }} <br/>
+              {{ solve(preg) }}
+            </li>
+          </ol>
+
+
+        </div>
+      </div>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+          preguntas:[
+
+            {
+              pregunta: "(21) Se deja caer una piedra a partir del estado de reposo. ¿Cuándo alcanzará un desplazamiento de 18 m por debajo del punto de partida? ¿Cuál es su velocidad en ese momento?",
+              solution: "solution_0",
+              datos:{
+                  $d1: math.randomInt(200, 600),
+                  $d2: math.randomInt(60, 180),
+              }
+            },
+            {
+              pregunta: "(23) A un ladrillo se le imparte una velocidad inicial de 6 m/s en su trayectoria hacia abajo. ¿Cuál será su velocidad final después de caer una distancia de 40 m?",
+
+              solution: "solution_0",
+              datos:{
+                  $d1: math.randomInt(200, 600),
+                  $d2: math.randomInt(60, 180),
+              }
+            },
+            {
+              pregunta: "(24) Un proyectil se lanza verticalmente hacia arriba y regresa a su posición inicial en 5 s. ¿Cuál es su velocidad inicial y hasta qué altura llega?",
+
+              solution: "solution_0",
+              datos:{
+                  $d1: math.randomInt(200, 600),
+                  $d2: math.randomInt(60, 180),
+              }
+            },
+            {
+              pregunta: "(25) Una flecha se dispara verticalmente hacia arriba con una velocidad inicial de 80 ft/s. ¿Cuál es su altura máxima?",
+
+              solution: "solution_0",
+              datos:{
+                  $d1: math.randomInt(200, 600),
+                  $d2: math.randomInt(60, 180),
+              }
+            },
+            {
+              pregunta: "(27) Un martillo es arrojado verticalmente hacia arriba en dirección a la cumbre de un techo de 16 m de altura. ¿Qué velocidad inicial mínima se requirió para que llegara ahí?",
+
+              solution: "solution_0",
+              datos:{
+                  $d1: math.randomInt(200, 600),
+                  $d2: math.randomInt(60, 180),
+              }
+            },
+            {
+              pregunta: "(31) Una bola de acero rueda y cae por el borde de una mesa desde 4 ft por encima del piso. Si golpea el suelo a 5 ft de la base de la mesa, ¿cuál fue su velocidad horizontal inicial?",
+
+              solution: "solution_0",
+              datos:{
+                  $d1: math.randomInt(200, 600),
+                  $d2: math.randomInt(60, 180),
+              }
+            },
+            {
+              pregunta: "(32) Una bala sale del cañón de un arma con una velocidad horizontal inicial de 400 m/s. Halle los desplazamientos horizontal y vertical después de 3 s.",
+
+              solution: "solution_0",
+              datos:{
+                  $d1: math.randomInt(200, 600),
+                  $d2: math.randomInt(60, 180),
+              }
+            },
+            {
+              pregunta: "(33) Un proyectil tiene una velocidad horizontal inicial de 40 m/s en el borde de un tejado. Encuentre las componentes horizontal y vertical de su velocidad después de 3 s.",
+
+              solution: "solution_0",
+              datos:{
+                  $d1: math.randomInt(200, 600),
+                  $d2: math.randomInt(60, 180),
+              }
+            },
+            {
+              pregunta: "(34) A una piedra se le imprime una velocidad inicial de 20 m /s a un ángulo de 58°. ¿Cuáles son sus desplazamientos horizontal y vertical después de 3 s?",
+
+              solution: "solution_0",
+              datos:{
+                  $d1: math.randomInt(200, 600),
+                  $d2: math.randomInt(60, 180),
+              }
+            },
+            {
+              pregunta: "(35) Una pelota de béisbol sale golpeada por el bate con una velocidad de 30 m/s a un ángulo de 30°. ¿Cuáles son las componentes horizontal y vertical de su velocidad después de 3 s?",
+
+              solution: "solution_0",
+              datos:{
+                  $d1: math.randomInt(200, 600),
+                  $d2: math.randomInt(60, 180),
+              }
+            },
+            {
+              pregunta: "(37) Una flecha sale del arco con una velocidad inicial de 120 ft/s a un ángulo de 37° respecto a la horizontal. ¿Cuáles son las componentes horizontal y vertical de su desplazamiento al cabo de dos segundos?",
+
+              solution: "solution_0",
+              datos:{
+                  $d1: math.randomInt(200, 600),
+                  $d2: math.randomInt(60, 180),
+              }
+            },
+            {
+              pregunta: "(40) Un proyectil sale disparado del suelo con una velocidad de 35 m/s a un ángulo de 32°. ¿Cuál es la altura máxima que alcanza?",
+
+              solution: "solution_0",
+              datos:{
+                  $d1: math.randomInt(200, 600),
+                  $d2: math.randomInt(60, 180),
+              }
+            },
+
+
+            {
+              pregunta: "(15) En una prueba de frenado, un vehículo que viaja a $d1 km /h se detiene en un tiempo de $d2 s. ¿Cuáles fueron la aceleración y la distancia de frenado?",
+              solution: "solution_1",
+              datos:{
+                  $d1: math.randomInt(50, 60),
+                  $d2: math.randomInt(1, 10),
+              }
+            },
+            {
+              pregunta: "(8) ¿Cuánto tiempo lleva recorrer $d1 km si la rapidez media es de $d2 km/h?",
+              solution: "solution_2",
+              datos:{
+                  $d1: math.randomInt(200, 600),
+                  $d2: math.randomInt(60, 180),
+              }
+            },
+
+          ],
+
+        },
+        methods:{
+            setRandom: function(pObj){
+              jQuery.each(pObj.datos, function(key, val){
+                  // console.log(key, typeof key,  val);
+                  pObj.pregunta = pObj.pregunta.replace(key, val);
+                  // console.log(pObj.pregunta);
+              })
+              return pObj.pregunta;
+            },
+            solve: function(pObj){
+              var solveFunction = pObj.solution;
+              return this[solveFunction](pObj.datos);
+            },
+
+                solution_0: function(data){
+                    return " ";
+                },
+                solution_1: function(data){
+                    var v0 = this.kh_to_ms(data.$d1);
+                    var a = this.get_a(v0, 0, data.$d2)
+                    var s = this.get_s(v0, 0, data.$d2)
+                    return a+"m/s2 "+s+" m";
+                },
+                solution_2: function(data){
+                    var t = this.get_t(data.$d1, data.$d2)
+                    return  t+" h";
+                },
+
+            kh_to_ms: function(vel){
+              return  vel / 3.6;
+            },
+            get_a: function(v0, vf, t){
+                return (vf - v0)/t;
+            },
+            get_s: function(v0, vf, t){
+              return (v0 + vf)/2 * t;
+            },
+            get_t: function(s, t){
+              return s/t;
+            }
+        }
+    })
+    </script>
+
+  </body>
+</html>
