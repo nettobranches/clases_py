@@ -31,6 +31,9 @@ class Pregunta(models.Model):
         # print(lst_res_o)
         return str_res
 
+    def resultado(self):
+        return self.metodo
+
 class RespuestaOriginal(models.Model):
     pregunta = models.ForeignKey(
         Pregunta,

@@ -30,7 +30,24 @@ def detail(request):
     # print(res_list)
     template = loader.get_template('exams/detail.html')
     context = {
+        'timestamp': ts,
         'materia': "fisica",
+        'unidad': 'unidad I',
+        'grupos': '1 QFB',
+        'pregunta_list': pregunta_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+def get_timestamp(request, timestamp):
+
+    pregunta_list = Pregunta.objects.all()
+    # print(res_list)
+    template = loader.get_template('exams/detail.html')
+    context = {
+        'timestamp': timestamp,
+        'materia': "fisica",
+        'unidad': 'unidad I',
+        'grupos': '1 QFB',
         'pregunta_list': pregunta_list,
     }
     return HttpResponse(template.render(context, request))
