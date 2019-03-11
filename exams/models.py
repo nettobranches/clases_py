@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 
+import lib.fisica  
+
 
 
 class Pregunta(models.Model):
