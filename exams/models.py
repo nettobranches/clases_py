@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
-import lib.fisica  
+# import controllers.fisica
 
 
 
@@ -23,9 +23,10 @@ class Pregunta(models.Model):
         # print(lst_res_o)
         return str_res
 
-    def getRandom(self):
+    def getRandom(self, timestamp):
         print(self)
-        lst_res_o = self.respuestaaleatoria_set.all()
+        lst_res_o = self.respuestaaleatoria_set.filter(marca = timestamp)
+        print("res rand", lst_res_o)
         str_res = self.pregunta_txt
 
         for ro in lst_res_o:
@@ -72,4 +73,4 @@ def do_method(method):
     return res
 
 def default():
-    return 1+1
+    return ""
