@@ -22,6 +22,7 @@ class Pregunta(models.Model):
         return str_res
 
     def getRandom(self):
+        print(self)
         lst_res_o = self.respuestaaleatoria_set.all()
         str_res = self.pregunta_txt
 

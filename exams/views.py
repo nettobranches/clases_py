@@ -41,6 +41,7 @@ def detail(request):
 def get_timestamp(request, timestamp):
 
     pregunta_list = Pregunta.objects.all()
+    pregunta_list.timestamp = timestamp
     # print(res_list)
     template = loader.get_template('exams/detail.html')
     context = {
