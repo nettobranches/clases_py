@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 
+import lib.fisica  
+
 
 
 class Pregunta(models.Model):
@@ -33,7 +35,7 @@ class Pregunta(models.Model):
         return str_res
 
     def resultado(self):
-        return self.metodo
+        return do_method(self.metodo)
 
 class RespuestaOriginal(models.Model):
     pregunta = models.ForeignKey(
@@ -60,3 +62,14 @@ class RespuestaAleatoria(models.Model):
 
     def __str__(self):
         return self.pregunta.pregunta_txt
+
+def do_method(method):
+    res = ""
+    if(method == "default"):
+        res = default()
+
+
+    return res
+
+def default():
+    return 1+1
