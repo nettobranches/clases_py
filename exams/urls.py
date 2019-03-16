@@ -11,4 +11,6 @@ urlpatterns = [
     path('fisica/<int:timestamp>', views.get_timestamp, name='get_timestamp'),
     # ex: /exams/5/
     path('calc/', views.calculo, name='calculo'),
+
+    path('resultados/<int:timestamp>', views.resultados, name='resultados'),
 ]

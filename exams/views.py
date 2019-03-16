@@ -86,3 +86,26 @@ def calculo(request):
         'pregunta_list': p_list,
     }
     return HttpResponse(template.render(context, request))
+
+def resultados(request, timestamp):
+    meta = RespuestaAleatoria.objects.filter(marca = timestamp)
+    materia = meta[0].pregunta.materia
+    print("materia", materia)
+
+    pregunta_list = Pregunta.objects.filter(materia=materia)
+    # print("unidad", meta.pregunta.unidad)
+    p_list = []
+    for pregunta in pregunta_list:
+        # print("p:", pregunta.getRandom(timestamp))
+        p_list.append(pregunta.getRandom(timestamp))
+
+    # return HttpResponse("timestamp: "+str(timestamp) )
+    template = loader.get_template('exams/tpl_result.html')
+    context = {
+        'timestamp': timestamp,
+        'materia': materia,
+        'unidad': 'unidad I',
+        'grupos': '1 QFB',
+        'pregunta_list': p_list,
+    }
+    return HttpResponse(template.render(context, request))
