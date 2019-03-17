@@ -2,9 +2,8 @@ from django.db import models
 # from django.utils import timezone
 
 # import controllers.fisica
-from controllers.calculo import getMethod
 
-
+from controllers.solver import doMethod
 
 class Pregunta(models.Model):
     pregunta_txt = models.CharField(max_length=400)
@@ -37,7 +36,7 @@ class Pregunta(models.Model):
             # print(getMethod(self.metodo))
         # print(lst_res_o)
         res.append(str_res)
-        res.append(" \\( "+ getMethod(self.metodo, lst_res_o) +"\\)")
+        res.append( doMethod(self.materia, self.unidad, self.metodo, lst_res_o) )
         return res
 
     def resultado(self):
@@ -70,14 +69,3 @@ class RespuestaAleatoria(models.Model):
 
     def __str__(self):
         return str(self.variable)+" = "+str(self.res)+" : "+self.pregunta.pregunta_txt
-
-def do_method(method):
-    res = ""
-    if(method == "default"):
-        res = default()
-
-
-    return res
-
-def default():
-    return ""
