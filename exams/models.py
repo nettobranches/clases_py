@@ -3,7 +3,7 @@ from django.db import models
 
 # import controllers.fisica
 
-from controllers.solver import doMethod
+from controllers.solver import doMethod, doRandomMethod
 
 class Pregunta(models.Model):
     pregunta_txt = models.CharField(max_length=400)
@@ -17,12 +17,18 @@ class Pregunta(models.Model):
     def getOriginal(self):
         lst_res_o = self.respuestaoriginal_set.all()
         str_res = self.pregunta_txt
+        res = []
 
         for ro in lst_res_o:
-            str_res = str_res.replace(str(ro.variable), str(ro.res) )
+            if(ro.res == "0"):
+                value = ""
+            else:
+                value = ro.res
+            str_res = str_res.replace(str(ro.variable), str(value) )
 
-        # print(lst_res_o)
-        return str_res
+        res.append(str_res)
+        res.append( doMethod(self.materia, self.unidad, self.metodo, lst_res_o, str_res) )
+        return res
 
     def getRandom(self, timestamp):
         # print(self)
@@ -36,7 +42,7 @@ class Pregunta(models.Model):
             # print(getMethod(self.metodo))
         # print(lst_res_o)
         res.append(str_res)
-        res.append( doMethod(self.materia, self.unidad, self.metodo, lst_res_o) )
+        res.append( doMethod(self.materia, self.unidad, self.metodo, lst_res_o, str_res) )
         return res
 
     def resultado(self):
@@ -49,12 +55,14 @@ class RespuestaOriginal(models.Model):
         on_delete=models.CASCADE,
     )
     variable = models.CharField(max_length=10)
-    res = models.IntegerField()
-    limite_inicial = models.IntegerField()
-    limite_final = models.IntegerField()
+    res = models.CharField(max_length=10)
+    generate_method = models.CharField(max_length=100)
 
     def __str__(self):
         return str(self.variable)+" = "+str(self.res)+" : "+self.pregunta.pregunta_txt
+
+    def generate_res(self):
+        return doRandomMethod(self.generate_method)
 
 
 class RespuestaAleatoria(models.Model):
@@ -64,7 +72,8 @@ class RespuestaAleatoria(models.Model):
     )
     marca = models.CharField(max_length=250)
     variable = models.CharField(max_length=10)
-    res = models.IntegerField()
+    res =models.CharField(max_length=100)
+
 
 
     def __str__(self):

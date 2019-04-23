@@ -10,7 +10,11 @@ urlpatterns = [
     # ex: /exams/5/
     path('fisica/<int:timestamp>', views.get_timestamp, name='get_timestamp'),
     # ex: /exams/5/
-    path('calc/', views.calculo, name='calculo'),
+    path('calc/<str:unidad>/<str:respuesta>/<int:preguntas>', views.calculo, name='calculo'),
+
+    path('resultados/original/<str:materia>/<str:unidad>', views.resultados_original, name='resultados_original'),
+
+    path('preguntas/original/<str:materia>/<str:unidad>', views.preguntas_original, name='preguntas_original'),
 
     path('resultados/<int:timestamp>', views.resultados, name='resultados'),
 ]

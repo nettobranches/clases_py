@@ -53,39 +53,59 @@ def get_timestamp(request, timestamp):
     }
     return HttpResponse(template.render(context, request))
 
-def calculo(request):
+def calculo(request, unidad, respuesta, preguntas):
     # question = get_object_or_404(Pregunta, pk=question_id)
 
     # ro = pregunta_list[0].respuestaoriginal_set.all()
     # print(pregunta_list)
     # print("respuesta original",  pregunta_list[0].getOriginal() )
 
-    res_list = RespuestaOriginal.objects.all()
-    ts = int(time.time())
 
-    for ritem in res_list:
-        ni = RespuestaAleatoria(marca = str(ts), pregunta = ritem.pregunta, variable = ritem.variable, res = random.randint( ritem.limite_inicial, ritem.limite_final ))
-        ni.save()
+    # pregunta_list = Pregunta.objects.filter(materia="calculo", unidad= unidad).order_by('?')[:preguntas]
+    pregunta_list = Pregunta.objects.filter(materia="calculo", unidad= unidad)[:preguntas]
 
-    p_list = []
-    pregunta_list = Pregunta.objects.filter(materia="calculo")
-    for pregunta in pregunta_list:
-        # tPregunta = pregunta.getOriginal()
-        tPregunta = pregunta.getRandom(ts)
-        print("p", tPregunta)
-        p_list.append(tPregunta)
+    # p_list = setOriginal(pregunta_list)
+    if( respuesta == 'o' ):
+        ts = unidad
+        p_list = setOriginal(pregunta_list)
+    else:
+        ts = int(time.time())
+        p_list = setRandom(pregunta_list, ts)
 
     print("list", p_list)
     # print(res_list)
     template = loader.get_template('exams/tpl_examen.html')
     context = {
         'timestamp': ts,
-        'materia': "fisica",
-        'unidad': 'unidad I',
-        'grupos': '1 QFB',
+        'materia': "calculo",
+        'unidad': 'unidad II',
+        'grupos': '2 QBT 3 ICM',
         'pregunta_list': p_list,
     }
     return HttpResponse(template.render(context, request))
+
+def setOriginal(pregunta_list):
+    p_list = []
+    for pregunta in pregunta_list:
+        tPregunta = pregunta.getOriginal()
+        print("p", tPregunta)
+        p_list.append(tPregunta)
+    return p_list
+
+def setRandom(pregunta_list, ts):
+    res_list = RespuestaOriginal.objects.all()
+
+    for ritem in res_list:
+        ni = RespuestaAleatoria(marca = str(ts), pregunta = ritem.pregunta, variable = ritem.variable, res = ritem.generate_res() )
+        ni.save()
+
+    p_list = []
+    for pregunta in pregunta_list:
+        tPregunta = pregunta.getRandom(ts)
+        print("p", tPregunta)
+        p_list.append(tPregunta[0])
+
+    return p_list
 
 def resultados(request, timestamp):
     meta = RespuestaAleatoria.objects.filter(marca = timestamp)
@@ -106,6 +126,48 @@ def resultados(request, timestamp):
         'materia': materia,
         'unidad': 'unidad I',
         'grupos': '1 QFB',
+        'pregunta_list': p_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+def resultados_original(request, materia, unidad):
+    print("materia", materia)
+
+    pregunta_list = Pregunta.objects.filter(materia=materia)
+    # print("unidad", meta.pregunta.unidad)
+    p_list = []
+    for pregunta in pregunta_list:
+        # print("p:", pregunta.getRandom(timestamp))
+        p_list.append(pregunta.getOriginal())
+
+    # return HttpResponse("timestamp: "+str(timestamp) )
+    template = loader.get_template('exams/tpl_result.html')
+    context = {
+        'timestamp': 0,
+        'materia': materia,
+        'unidad': 'unidad I',
+        'grupos': '1 QFB',
+        'pregunta_list': p_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+def preguntas_original(request, materia, unidad):
+    print("materia", materia)
+
+    pregunta_list = Pregunta.objects.filter(materia=materia)
+    # print("unidad", meta.pregunta.unidad)
+    p_list = []
+    for pregunta in pregunta_list:
+        # print("p:", pregunta.getRandom(timestamp))
+        p_list.append(pregunta.getOriginal()[0])
+
+    # return HttpResponse("timestamp: "+str(timestamp) )
+    template = loader.get_template('exams/tpl_examen.html')
+    context = {
+        'timestamp': 0,
+        'materia': "Eléctromagnetismo y Óptica",
+        'unidad': 'unidad II',
+        'grupos': '3 ICM',
         'pregunta_list': p_list,
     }
     return HttpResponse(template.render(context, request))
