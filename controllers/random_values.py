@@ -18,6 +18,11 @@ def randomMethod(strMethod):
     return res
 
 def default():
+    val = gt_one()
+
+    return val
+
+def default_all():
     rndTipo = random.randint(0,2)
 
     if( rndTipo == 0 ):

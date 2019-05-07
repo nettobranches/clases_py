@@ -10,6 +10,7 @@ class Pregunta(models.Model):
     materia = models.CharField(max_length=200)
     metodo = models.CharField(max_length=200)
     unidad = models.CharField(max_length=1)
+    # grupos = models.CharField(max_length=20)
 
     def __str__(self):
         return self.pregunta_txt

@@ -10,6 +10,7 @@ e0 = 8.85*10**-12
 def emyoMethod(unidad, strMethod, params, pregunta):
     print("strmethod", strMethod);
     res = ""
+    # unidad 2
     if (strMethod == "carga_cv"):
         res =carga_cv(params)
     elif(strMethod == "capacitancia_qv"):
@@ -22,10 +23,27 @@ def emyoMethod(unidad, strMethod, params, pregunta):
         res = energiapotencial_cv(params)
     elif(strMethod == "cap_serie_paralelo"):
         res = cap_serie_paralelo(params)
+    # unidad 3
+    elif(strMethod == "n_electrones"):
+        res = n_electrones(params)
+    elif(strMethod == "corriente_rv"):
+        res = corriente_rv(params)
+    elif(strMethod == "corriente_potencia"):
+        res = corriente_potencia(params)
+    elif(strMethod == "corriente_resistencia"):
+        res = corriente_resistencia(params)
+    elif(strMethod == "resistencia_serie"):
+        res = resistencia_serie(params)
+    elif(strMethod == "resistencia_paralelo"):
+        res = resistencia_paralelo(params)
+    elif(strMethod == "resistencia_mixta"):
+        res = resistencia_mixta(params)
+    elif(strMethod == "kirchoff_ley2"):
+        res = kirchoff_ley2(params)
 
     return res
 
-# unidad 1
+# unidad 2
 def carga_cv(params):
     c = float(params[0].res)*10**-6
     v = float(params[1].res)
@@ -33,7 +51,7 @@ def carga_cv(params):
     res = " \\( \\begin{align*}"\
     " q &= c \\cdot v "\
     "\\\\"\
-    " q &= " + str(c) + " \\cdot " + str(v) + " = "+str(q) +"C"\
+    " q &= " + str(format(c,'0.6f')) + " \\cdot " + str(v) + " = "+str(format(q,'0.6f')) +"C"\
     "\\end{align*}"\
     "\\)"
     return res
@@ -45,7 +63,7 @@ def capacitancia_qv(params):
     res = " \\( \\begin{align*}"\
     "c &= \\dfrac{ q }{ v } "\
     "\\\\"\
-    "c &= \\dfrac{"+ str(q) +"}{"+ str(v) +"} =" + str(c) +"F"\
+    "c &= \\dfrac{"+ str(q) +"}{"+ str(v) +"} =" + str(format(c,'0.2E')) +"F"\
     "\\end{align*}"\
     "\\)"
     return res
@@ -57,7 +75,7 @@ def capacitancia_e0ea(params):
     res = " \\( \\begin{align*}"\
     "c &= e_{0} \\cdot \\dfrac{ A }{ d }"\
     "\\\\"\
-    "c &= 1 \\cdot \\dfrac{"+ str(A) +"}{"+ str(d) +"} = "+ str(c) +"F"\
+    "c &= "+str(format(e0,'0.2E'))+" \\cdot \\dfrac{"+ str(A) +"}{"+ str(d) +"} = "+ str(format(c,'0.2E')) +"F"\
     "\\end{align*}"\
     "\\)"
     return res
@@ -65,13 +83,13 @@ def capacitancia_e0ea(params):
 def capacitancia_serie3(params):
     c1 = float(params[0].res)
     c2 = float(params[1].res)
-    c3 = float(params[1].res)
+    c3 = float(params[2].res)
     ct = 1/( 1/c1 + 1/c2 + 1/c3 )
     # return " \\( \dfrac{ 1 }{ ct } = \dfrac{ 1 }{ c_{1} } +\dfrac{ 1 }{ c_{2} } + \dfrac{ 1 }{ c_{3} } = "+ str(ct) + "\\)"
     res = " \\( \\begin{align*}"\
     "\dfrac{ 1 }{ ct } &= \dfrac{ 1 }{ c_{1} } +\dfrac{ 1 }{ c_{2} } + \dfrac{ 1 }{ c_{3} }"\
     "\\\\"\
-    "\dfrac{ 1 }{ ct } &= \dfrac{ 1 }{"+str(c1)+"} +\dfrac{ 1 }{"+str(c2)+"} + \dfrac{ 1 }{"+str(c3)+"} = "+ str(ct) +"F"\
+    "\dfrac{ 1 }{ ct } &= \dfrac{ 1 }{"+str(c1)+"} +\dfrac{ 1 }{"+str(c2)+"} + \dfrac{ 1 }{"+str(c3)+"} = "+ str(format(ct,'0.2E')) +"F"\
     "\\end{align*}"\
     "\\)"
     return res
@@ -83,7 +101,7 @@ def energiapotencial_cv(params):
     res = " \\( \\begin{align*}"\
     "pe &= \dfrac{ 1 }{ 2 } \cdot c \cdot v^2"\
     "\\\\"\
-    "pe &= \dfrac{ 1 }{ 2 } \cdot "+str(c)+" \cdot "+str(v)+"^2 ="+ str(pe) + "F"\
+    "pe &= \dfrac{ 1 }{ 2 } \cdot "+str(format(c,"0.6f"))+" \cdot "+str(v)+"^2 ="+ str(pe) + "W"\
     "\\end{align*}"\
     "\\)"
     return res
@@ -97,11 +115,164 @@ def cap_serie_paralelo(params):
     res = " \\( \\begin{align*}"\
     "c_{1,2} &= c_{1} + c_{2}"\
     "\\\\"\
-    "c_{1,2} &="+ str(c1) +"+"+ str(c2) +" = "+ str(ct_paralelo) + "F"\
+    "c_{1,2} &="+ str(format(c1,"0.6f")) +"+"+ str(format(c2,"0.6f")) +" = "+ str(format(ct_paralelo,'0.6f')) + "F"\
     "\\\\"\
     "\\dfrac{ 1 }{ ct } &= \\dfrac{ 1 }{ c_{1,2} } + \\dfrac{ 1 }{ c_{3} }"\
     "\\\\"\
-    "\\dfrac{ 1 }{ ct } &= \\dfrac{ 1 }{"+str(ct_paralelo)+"} + \\dfrac{ 1 }{"+ str(c3) +"} = "+ str(ct_serie) +"F"\
+    "\\dfrac{ 1 }{ ct } &= \\dfrac{ 1 }{"+str(format(ct_paralelo,'0.6f'))+"} + \\dfrac{ 1 }{"+ str(format(c3,"0.6f")) +"} = "+ str(format(ct_serie,'0.2E')) +"F"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+# unidad 3
+
+def n_electrones(params):
+    i = float(params[0].res)
+    t = 1
+    q = i*t/(1.6*10**-19)
+    res = " \\( \\begin{align*}"\
+    " q &= I \\cdot t \\cdot \\dfrac{ 1 }{ 1.6x10^-19 } "\
+    "\\\\"\
+    " q &= " + str(format(i,'0.6f')) + " \\cdot " + str(t) + " \\dfrac{ 1 }{ 1.6x10^-19 } = "+str(format(q,'0.2E')) +" electrones"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def corriente_rv(params):
+    r = float(params[0].res)
+    v = float(params[1].res)
+    i = v / r
+    res = " \\( \\begin{align*}"\
+    " I &= \\dfrac{ V }{ R } "\
+    "\\\\"\
+    " I &= \\dfrac{" + str(v) + " }{ " + str(r) + "} = "+str(format(i,'0.2f')) +"A"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def corriente_potencia(params):
+    r = float(params[0].res)
+    v = float(params[1].res)
+    p = v**2/r
+    res = " \\( \\begin{align*}"\
+    " P &= \\dfrac{ V^2 }{ R } "\
+    "\\\\"\
+    " P &= \\dfrac{" + str(format(v,'0.2f')) + "^2 }{ " + str(r) + "} = "+str(format(p,'0.2f')) +"W"\
+    "\\end{align*}"\
+    "\\)"
+    return corriente_rv(params)+res
+
+def corriente_resistencia(params):
+    return corriente_pv(params)+resistencia_vi(params)
+
+def corriente_pv(params):
+    v = float(params[0].res)
+    p = float(params[1].res)*1000
+    i = p/v
+    res = " \\( \\begin{align*}"\
+    " I &= \\dfrac{ P }{ V } "\
+    "\\\\"\
+    " I &= \\dfrac{" + str(format(p,'0.2f')) + " }{ " + str(v) + "} = "+str(format(i,'0.2f')) +"A"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def resistencia_vi(params):
+    v = float(params[0].res)
+    p = float(params[1].res)*1000
+    i = p/v
+    r = v/i
+    res = " \\( \\begin{align*}"\
+    " R &= \\dfrac{ V }{ I } "\
+    "\\\\"\
+    " R &= \\dfrac{" + str(format(v,'0.2f')) + " }{ " + str(i) + "} = "+str(format(r,'0.2f')) +"\\Omega"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def resistencia_serie(params):
+    r1 = float(params[0].res)
+    r2 = float(params[1].res)
+    rt = r1 + r2
+    res = " \\( \\begin{align*}"\
+    " R_{t} &= R_{1} + R_{2} "\
+    "\\\\"\
+    " R_{t} &= " + str(format(r1,'0.2f')) + " + " + str(r2) + "  = "+str(format(rt,'0.2f')) +" electrones"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def resistencia_paralelo(params):
+    r1 = float(params[0].res)
+    r2 = float(params[1].res)
+    rt = 1/(1/r1 + 1/r2)
+    res = " \\( \\begin{align*}"\
+    " \\dfrac{ 1 }{ R_{t} } &= \\dfrac{ 1 }{ R_{1} } + \\dfrac{ 1 }{ R_{2} } "\
+    "\\\\"\
+    " \\dfrac{ 1 }{ R_{t} } &= \\dfrac{ 1 }{" + str(format(r1,'0.2f')) + " } + \\dfrac{ 1 }{ " + str(r2) + "} = "+str(format(rt,'0.2f')) +"\\Omega"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def resistencia_mixta(params):
+    r1 = float(params[0].res)
+    r2 = float(params[1].res)
+    r3 = float(params[2].res)
+    r4 = float(params[3].res)
+    r5 = float(params[4].res)
+
+    r12 = r1 + r2
+
+    r123 = 1/( 1/r12 + 1/r3 )
+
+    r1234 = r123 + r4
+
+    rt = 1/( 1/r1234 + 1/r5 )
+
+    res = " \\( \\begin{align*}"\
+    " R_{1,2} &= R_{1} + R_{2} "\
+    "\\\\"\
+    " \\dfrac{ 1 }{ R_{1,2,3} } &= \\dfrac{ 1 }{ R_{1,2} } + \\dfrac{ 1 }{ R_{3} } "\
+    "\\\\"\
+    " R_{1,2,3,4} &= R_{1,2,3} + R_{4} "\
+    "\\\\"\
+    " \\dfrac{ 1 }{ R_{t} } &= \\dfrac{ 1 }{ R_{1,2,3,4} } + \\dfrac{ 1 }{ R_{5} } "\
+    "\\end{align*}"\
+    "\\)"\
+    " \\( \\begin{align*}"\
+    " R_{1,2} &= " + str(format(r1,'0.2f')) + " + " + str(r2) + " = "+str(format(r12,'0.2f')) +"\\Omega"\
+    "\\\\"\
+    " \\dfrac{ 1 }{ R_{1,2,3} } &= \\dfrac{ 1 }{" + str(format(r12,'0.2f')) + " } + \\dfrac{ 1 }{ " + str(r3) + "} = "+str(format(r123,'0.2f')) +"\\Omega"\
+    "\\\\"\
+    " R_{1,2,3,4} &= " + str(format(r123,'0.2f')) + " + " + str(r4) + " = "+str(format(r1234,'0.2f')) +"\\Omega"\
+    "\\\\"\
+    " \\dfrac{ 1 }{ R_{t} } &= \\dfrac{ 1 }{" + str(format(r1234,'0.2f')) + " } + \\dfrac{ 1 }{ " + str(r5) + "} = "+str(format(rt,'0.2f')) +"\\Omega"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def kirchoff_ley2(params):
+    v1 = float(params[0].res)
+    v2 = float(params[1].res)
+    r1 = float(params[2].res)
+    r2 = float(params[3].res)
+
+    vt = v1 -v2
+
+    rt = r1 + r2
+
+    i = vt / rt
+
+    res = " \\( \\begin{align*}"\
+    " ee &= " + str(format(v1,'0.2f')) + " - " + str(v2) + " = "+str(format(vt,'0.2f')) +"\\Omega"\
+    "\\end{align*}"\
+    "\\)"\
+    " \\( \\begin{align*}"\
+    " eir &= I " + str(format(r1,'0.2f')) + " + I " + str(r2) + " = "+str(format(rt,'0.2f')) +"\\Omega"\
+    "\\end{align*}"\
+    "\\)"\
+    " \\( \\begin{align*}"\
+    " I &= \\dfrac{" + str(format(vt,'0.2f')) + " }{ " + str(rt) + "} = "+str(format(i,'0.2f')) +"A"\
     "\\end{align*}"\
     "\\)"
     return res

@@ -16,5 +16,7 @@ urlpatterns = [
 
     path('preguntas/original/<str:materia>/<str:unidad>', views.preguntas_original, name='preguntas_original'),
 
+    path('preguntas/generar/<str:materia>/<str:unidad>', views.preguntas_generar, name='preguntas_generar'),
+
     path('resultados/<int:timestamp>', views.resultados, name='resultados'),
 ]
