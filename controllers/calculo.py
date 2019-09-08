@@ -4,6 +4,9 @@ x, y, z, t = symbols('x y z t')
 k, m, n, a, b = symbols('k m n a b', integer=True)
 f, g, h = symbols('f g h', cls=Function)
 
+def _calculoMethod(unidad, strMethod, params, pregunta):
+    return ""
+
 def calculoMethod(unidad, strMethod, params, pregunta):
     print("strmethod", strMethod);
     res = ""
@@ -56,8 +59,8 @@ def u2_1(params, pregunta):
 
 def u2_2(params, pregunta):
     na = latex(params[0].res)
-    return " \\( "+ str(latex(integrate( sec(na*x)*tan(na*x), x)))+ "\\)"
-
+    # return " \\( "+ str(latex(integrate( sec(na*x)*tan(na*x), x)))+ "\\)"
+    return ''
 def u2_3(params, pregunta):
     na = int(params[0].res)
     return " \\( "+ str(latex( -log(cos(exp(x))) ))+ "\\)"

@@ -5,14 +5,28 @@ from sympy.physics import units as u
 
 # constantes
 e0 = 8.85*10**-12
+k = 9*10**9
 
 
 def emyoMethod(unidad, strMethod, params, pregunta):
     print("strmethod", strMethod);
     res = ""
+    # unidad 1
+    if (strMethod == "ley_coulomb_r"):
+        res = ley_coulomb_r(params)
+    elif (strMethod == "ley_coulomb_q"):
+        res = ley_coulomb_q(params)
+    elif (strMethod == "intensidad_campo_electrico_e"):
+        res = intensidad_campo_electrico_e(params)
+    elif (strMethod == "intensidad_campo_electrico_sum_e"):
+        res = intensidad_campo_electrico_sum_e(params)
+    elif (strMethod == "energia_potencial_r"):
+        res = energia_potencial_r(params)
+    elif (strMethod == "diferencia_potencial_v"):
+        res = diferencia_potencial_v(params)
     # unidad 2
-    if (strMethod == "carga_cv"):
-        res =carga_cv(params)
+    elif (strMethod == "carga_cv"):
+        res = carga_cv(params)
     elif(strMethod == "capacitancia_qv"):
         res = capacitancia_qv(params)
     elif(strMethod == "capacitancia_e0ea"):
@@ -41,6 +55,99 @@ def emyoMethod(unidad, strMethod, params, pregunta):
     elif(strMethod == "kirchoff_ley2"):
         res = kirchoff_ley2(params)
 
+    return res
+
+# unidad 1    
+def ley_coulomb_r(params):
+    q = float(params[0].res)*10**-6
+    f = float(params[1].res)
+    r = sqrt(k*q*q/f)
+    res = " \\( \\begin{align*}"\
+    " r &= \\sqrt{ \\dfrac{ k \\cdot Q \\cdot q }{ F }  } "\
+    "\\\\"\
+    " r &= \\sqrt{ \\dfrac{ " + str(format(k,'0.2E')) + " \\cdot " + str(format(q,'0.2E')) + " \\cdot " + str(format(q,'0.2E')) + " }{ " + str(f) + " }  } = "+str(format(r,'0.6f')) +" m"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def ley_coulomb_q(params):
+    r = float(params[0].res)*10**-3
+    f = float(params[1].res)
+    q = sqrt(f*r**2/k)
+    res = " \\( \\begin{align*}"\
+    " q &= \\sqrt{ \\dfrac{ F \\cdot r^2 }{ k }  } "\
+    "\\\\"\
+    " q &= \\sqrt{ \\dfrac{ " + str(f) + " \\cdot " + str(format(r,'0.2f')) + "^2 }{ " + str(format(k,'0.2E')) + " }  }  = "+str(format(q,'0.2E')) +" C"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def intensidad_campo_electrico_e(params):
+    q = float(params[0].res)*10**-6
+    f = float(params[1].res)*10**-5
+    e = f/q
+    res = " \\( \\begin{align*}"\
+    " E &= \\dfrac{ F }{ q } "\
+    "\\\\"\
+    " E &= \\dfrac{ " + str(format(f,'0.2E')) + " }{ " + str(format(q,'0.2E')) + " } = "+str(format(e,'0.2f')) +" N/C"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def intensidad_campo_electrico_sum_e(params):
+    r = float(params[0].res)*10**-3/2
+    q1 = -float(params[1].res)*10**-6
+    q2 = float(params[2].res)*10**-6
+    e1 = k*q1/r**2
+    e2 = k*q2/r**2
+    er = e1 + e2
+    res = " \\( \\begin{align*}"\
+    " E1 &= \\dfrac{ k \\cdot q1 }{ r^2 } "\
+    "\\\\"\
+    " E2 &= \\dfrac{ k \\cdot q2 }{ r^2 } "\
+    "\\\\"\
+    " E &= E1 + E2 "\
+    "\\\\"\
+    " E1 &= \\dfrac{ " + str(format(k,'0.2E')) + " \\cdot " + str(format(q1,'0.2E')) + " }{ " + str(format(r,'0.3f')) + "^2 } = "+str(format(e1,'0.2E')) +" C"\
+    "\\\\"\
+    " E2 &= \\dfrac{ " + str(format(k,'0.2E')) + " \\cdot " + str(format(q2,'0.2E')) + " }{ " + str(format(r,'0.3f')) + "^2 } = "+str(format(e2,'0.2E')) +" C"\
+    "\\\\"\
+    " E &= " + str(format(e1,'0.2E')) + " + " + str(format(e2,'0.2E')) + " = "+str(format(er,'0.2E')) +" C"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def energia_potencial_r(params):
+    Q = -float(params[0].res)*10**-6
+    q = -float(params[1].res)*10**-9
+    pe = float(params[2].res)*10**-5
+    r=k*Q*q/pe
+    res = " \\( \\begin{align*}"\
+    " r &= \\dfrac{ k \\cdot Q \\cdot q }{ p.e } "\
+    "\\\\"\
+    " r &= \\dfrac{ " + str(format(k,'0.2E')) + " \\cdot " + str(format(Q,'0.2E')) + " \\cdot " + str(format(q,'0.2E')) + " }{ " + str(format(pe,'0.2E')) + " } = "+str(format(r,'0.2f')) +" m"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def diferencia_potencial_v(params):
+    q1 = float(params[0].res)*10**-9
+    r1 = float(params[1].res)*10**-3
+    q2 = -float(params[2].res)*10**-9
+    r2 = float(params[1].res)*10**-3
+    v1 = k*q1/r1
+    v2 = k*q2/r2
+    v = v1+v2
+    res = " \\( \\begin{align*}"\
+    " V &= \\dfrac{ k \\cdot Q }{ r } "\
+    "\\\\"\
+    " V1 &= \\dfrac{ " + str(format(k,'0.2E')) + " \\cdot " + str(format(q1,'0.2E')) + " }{ " + str(format(r1,'0.2E')) + " } = "+str(format(v1,'0.6f')) +" v"\
+    "\\\\"\
+    " V2 &= \\dfrac{ " + str(format(k,'0.2E')) + " \\cdot " + str(format(q2,'0.2E')) + " }{ " + str(format(r2,'0.2E')) + " } = "+str(format(v2,'0.6f')) +" v"\
+    "\\\\"\
+    " V &= " + str(format(v1,'0.2E')) + " + " + str(format(v2,'0.2E')) + " = " + str(format(v,'0.2E')) +" v"\
+    "\\end{align*}"\
+    "\\)"
     return res
 
 # unidad 2

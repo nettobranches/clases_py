@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from .models import Pregunta, RespuestaOriginal, RespuestaAleatoria
+from .models import Pregunta, RespuestaOriginal, RespuestaAleatoria, RespuestaOrden
 from django.template import loader
 from django.shortcuts import get_object_or_404, render
 import random, time
@@ -92,8 +92,8 @@ def setOriginal(pregunta_list):
         p_list.append(tPregunta)
     return p_list
 
-def setRandom(pregunta_list, ts):
-    res_list = RespuestaOriginal.objects.all()
+def setRandom(pregunta_list, ts, materia, unidad):
+    res_list = RespuestaOriginal.objects.filter(pregunta__unidad__numero = unidad, pregunta__unidad__materia__nombre = materia)
 
     for ritem in res_list:
         ni = RespuestaAleatoria(marca = str(ts), pregunta = ritem.pregunta, variable = ritem.variable, res = ritem.generate_res() )
@@ -102,30 +102,33 @@ def setRandom(pregunta_list, ts):
     p_list = []
     for pregunta in pregunta_list:
         tPregunta = pregunta.getRandom(ts)
-        print("p", tPregunta)
-        p_list.append(tPregunta[0])
-
+        print("p", pregunta)
+        p_list.append({'pregunta': tPregunta[0], 'imagen': pregunta.imagen })
     return p_list
 
 def resultados(request, timestamp):
     meta = RespuestaAleatoria.objects.filter(marca = timestamp)
-    materia = meta[0].pregunta.materia
-    print("materia", materia)
+    print('meta', meta[0].pregunta.unidad, meta[0].pregunta.unidad.materia, meta[0].pregunta.unidad.numero)
+    materia = meta[0].pregunta.unidad.materia
+    unidad = meta[0].pregunta.unidad.numero
+    materia = "fisica"
+    unidad = "2"
 
-    pregunta_list = Pregunta.objects.filter(materia=materia)
+    pregunta_list = Pregunta.objects.filter(unidad__numero = unidad, unidad__materia__nombre = materia)
+    print('pregunta_list', pregunta_list)
     # print("unidad", meta.pregunta.unidad)
     p_list = []
     for pregunta in pregunta_list:
         # print("p:", pregunta.getRandom(timestamp))
-        p_list.append(pregunta.getRandom(timestamp))
+        p_list.append({'pregunta': pregunta.getRandom(timestamp)})
 
     # return HttpResponse("timestamp: "+str(timestamp) )
     template = loader.get_template('exams/tpl_result.html')
     context = {
         'timestamp': timestamp,
         'materia': materia,
-        'unidad': 'unidad I',
-        'grupos': '1 QFB',
+        'unidad': 'unidad '+unidad,
+        'grupos': '',
         'pregunta_list': p_list,
     }
     return HttpResponse(template.render(context, request))
@@ -133,73 +136,108 @@ def resultados(request, timestamp):
 def resultados_original(request, materia, unidad):
     print("materia", materia)
 
-    pregunta_list = Pregunta.objects.filter(materia = materia, unidad = unidad)
+    #pregunta_list = Pregunta.objects.filter(materia = materia, unidad = unidad)
+    pregunta_list = Pregunta.objects.filter(unidad__numero = unidad, unidad__materia__nombre = materia)
     # print("unidad", meta.pregunta.unidad)
     p_list = []
     for pregunta in pregunta_list:
         # print("p:", pregunta.getRandom(timestamp))
-        p_list.append(pregunta.getOriginal())
+        p_list.append({'pregunta': pregunta.getOriginal(), 'imagen': pregunta.imagen })
 
     # return HttpResponse("timestamp: "+str(timestamp) )
+    #print('p list', p_list)
     template = loader.get_template('exams/tpl_result.html')
     context = {
         'timestamp': 0,
         'materia': materia,
         'unidad': 'unidad '+ unidad,
-        'grupos': '1 QFB',
+        'grupos': '',
         'pregunta_list': p_list,
     }
     return HttpResponse(template.render(context, request))
 
 def preguntas_original(request, materia, unidad):
-    print("materia", materia)
+    print("materia", materia, unidad)
 
-    pregunta_list = Pregunta.objects.filter(materia = materia, unidad = unidad)
+    pregunta_list = Pregunta.objects.filter(unidad__numero = unidad, unidad__materia__nombre = materia)
+    #print('list', pregunta_list)
     # print("unidad", meta.pregunta.unidad)
     p_list = []
     for pregunta in pregunta_list:
-        # print("p:", pregunta.getRandom(timestamp))
-        p_list.append(pregunta.getOriginal()[0])
+        #print("p:", pregunta.getRandom(timestamp))
+        p_list.append({'pregunta': pregunta.getOriginal()[0], 'imagen': pregunta.imagen })
 
     # return HttpResponse("timestamp: "+str(timestamp) )
     template = loader.get_template('exams/tpl_examen.html')
     context = {
         'timestamp': 0,
-        'materia': "Eléctromagnetismo y Óptica",
+        'materia': materia,
         'unidad': 'unidad '+ unidad,
-        'grupos': '3 ICM',
+        'grupos': '',
         'pregunta_list': p_list,
     }
     return HttpResponse(template.render(context, request))
 
 def preguntas_generar(request, materia, unidad):
-    # question = get_object_or_404(Pregunta, pk=question_id)
+    pregunta_list = Pregunta.objects.filter(unidad__numero = unidad, unidad__materia__nombre = materia)
 
-    # ro = pregunta_list[0].respuestaoriginal_set.all()
-    # print(pregunta_list)
-    # print("respuesta original",  pregunta_list[0].getOriginal() )
-    respuesta = 'r'
-    preguntas = 10
-
-    # pregunta_list = Pregunta.objects.filter(materia="calculo", unidad= unidad).order_by('?')[:preguntas]
-    pregunta_list = Pregunta.objects.filter(materia=materia, unidad= unidad)[:preguntas]
-
-    # p_list = setOriginal(pregunta_list)
-    if( respuesta == 'o' ):
-        ts = unidad
-        p_list = setOriginal(pregunta_list)
-    else:
-        ts = int(time.time())
-        p_list = setRandom(pregunta_list, ts)
+    ts = int(time.time())
+    p_list = setRandom(pregunta_list, ts, materia, unidad)
 
     print("list", p_list)
     # print(res_list)
     template = loader.get_template('exams/tpl_examen.html')
     context = {
         'timestamp': ts,
-        'materia': "calculo",
-        'unidad': 'unidad II',
-        'grupos': '2 QBT 3 ICM',
+        'materia': materia,
+        'unidad': 'unidad'+unidad,
+        'grupos': '',
         'pregunta_list': p_list,
     }
     return HttpResponse(template.render(context, request))
+
+def preguntas_ordinario(request, materia):
+    pregunta_list = Pregunta.objects.filter(unidad__materia__nombre = materia).order_by('?')[:11]
+    #print('list', pregunta_list)
+    # print("unidad", meta.pregunta.unidad)
+    p_list = []
+    i = 0
+    ts = int(time.time())
+    for pregunta in pregunta_list:
+        #print("p:", pregunta.getRandom(timestamp))
+        i+=1
+        resOrden = RespuestaOrden(timestamp = ts, orden = i, pregunta = pregunta)
+        resOrden.save()
+        p_list.append({'pregunta': pregunta.getOriginal()[0], 'imagen': pregunta.imagen })
+
+    # return HttpResponse("timestamp: "+str(timestamp) )
+    template = loader.get_template('exams/tpl_examen.html')
+    context = {
+        'timestamp': ts,
+        'materia': materia,
+        'unidad': 'ordinario',
+        'grupos': '',
+        'pregunta_list': p_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+def resultados_ordinario(request, timestamp):
+    preguntaorden_list = RespuestaOrden.objects.filter(timestamp = timestamp).order_by('orden')
+
+    p_list = []
+    for preguntaorden in preguntaorden_list:
+        # print("p:", pregunta.getRandom(timestamp))
+        print(preguntaorden)
+        p_list.append({'pregunta': preguntaorden.pregunta.getOriginal(), 'imagen': preguntaorden.pregunta.imagen })
+    materia = ''
+
+    template = loader.get_template('exams/tpl_result.html')
+    context = {
+        'timestamp': timestamp,
+        'materia': materia,
+        'unidad': 'ordinario',
+        'grupos': '',
+        'pregunta_list': p_list,
+    }
+    return HttpResponse(template.render(context, request))
+

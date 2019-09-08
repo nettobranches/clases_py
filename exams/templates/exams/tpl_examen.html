@@ -53,11 +53,20 @@
     .student-name div:nth-child(4){
         border-bottom: 1px black solid;
     }
-    .preguntas{
-        font-size: 16px
+    .student-name div:nth-child(6){
+        border-bottom: 1px black solid;
     }
-    .preguntas li p{
-        margin-bottom: 10px;
+    .instrucciones{
+        font-size: 14px
+    }
+    .preguntas{
+        font-size: 12px
+    }
+    .preguntas li{
+      min-height: 50px
+    }
+    .pregunta-img{
+      height: 80px
     }
 
   </style>
@@ -100,19 +109,31 @@
           &nbsp;
         </div>
         <div class="col-xs-1">
-          fecha:
+          Fecha:
         </div>
         <div class="col-xs-2">
           &nbsp;
         </div>
+        <div class="col-xs-1">
+          Grupo:
+        </div>
+        <div class="col-xs-1">
+          &nbsp;
+        </div>
       </div>
+
 
       <div id="app" class="row">
         <div class="col-xs-12">
-          <p><b> Responde correctamente los siguientes ejercicios: </b></p>
+          <p class="instrucciones"><b> Responde correctamente los siguientes ejercicios: </b></p>
           <ol class="preguntas">
             {% for qitem in pregunta_list %}
-                <li><p>{{ qitem }}</p> <br/>
+                <li><p>{{ qitem.pregunta }}<br/>
+                  {% if qitem.imagen %}
+                  <img class="pregunta-img" src="{% static qitem.imagen %}" ></img>
+                  {% endif %}
+
+                  </p>
                 </li>
             {% endfor %}
           </ol>

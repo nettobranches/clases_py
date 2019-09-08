@@ -18,5 +18,9 @@ urlpatterns = [
 
     path('preguntas/generar/<str:materia>/<str:unidad>', views.preguntas_generar, name='preguntas_generar'),
 
+    path('preguntas/ordinario/<str:materia>', views.preguntas_ordinario, name='preguntas_ordinario'),
+
+    path('resultados/ordinario/<str:timestamp>', views.resultados_ordinario, name='resultados_ordinario'),
+
     path('resultados/<int:timestamp>', views.resultados, name='resultados'),
 ]

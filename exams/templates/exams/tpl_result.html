@@ -106,6 +106,14 @@
           &nbsp;
         </div>
       </div>
+      <div class="row student-name">
+        <div class="col-xs-2">
+          Grupo:
+        </div>
+        <div class="col-xs-2">
+          &nbsp;
+        </div>
+      </div>
 
       <div id="app" class="row">
         <div class="col-xs-12">
@@ -113,9 +121,8 @@
           <ol class="preguntas">
             {% for qitem in pregunta_list %}
                 <li><p>
-                  {% for pt in qitem %}
-                  {{ pt }}<br/>
-                  {% endfor %}
+                  {{ qitem.pregunta.0 }} <br/>
+                  {{ qitem.pregunta.1 }}
                 </p> <br/>
                 </li>
             {% endfor %}
