@@ -54,31 +54,84 @@ def fisicaMethod(unidad, strMethod, params, pregunta):
 
 # unidad 1
 def u1_1(params):
-    res = ""
+    l = float(params[0].res)
+    a = float(params[1].res)
+    foot = 3.28
+    fl = l*foot
+    fa = a*foot
+    res = str(fl)+" ft  "+str(fa)+" ft"
     return res
 
 def u1_2(params):
-    res = ""
+    c = float(params[0].res)
+    d = float(params[1].res)
+    i3 = 0.61 #cm3
+    inc =0.03937 #mm 
+    ic = c * i3
+    ind = d * inc
+    res = str(ic)+"in3 "+str(format(ind,'0.2f'))+"in "
     return res
 
 def u1_3(params):
-    res = ""
+    dens = float(params[0].res)
+    kgm3 = 1000 #gcm3
+    kgm3dens = dens * 1000
+    res = str(kgm3dens)+" kg/m3 "
     return res
 
 def u1_4(params):
-    res = ""
+    v1 = float(params[0].res)
+    v2 = float(params[1].res)
+    anglex = 0
+    angley = 90
+
+    vx = v1 * cos(radians(anglex)) + v2 * cos(radians(angley))
+    vy = v1 * sin(radians(anglex)) + v2 * sin(radians(angley))
+    vt = sqrt(vx**2 + vy**2)
+    res =  str(format(vt,'0.2f'))+" km "
     return res
 
 def u1_5(params):
-    res = ""
+    v1 = float(params[0].res)
+    v2 = float(params[2].res)
+    anglex = float(params[1].res)
+    angley = float(params[3].res)
+
+    vx = v1 * cos(radians(anglex)) + v2 * cos(radians(angley))
+    vy = v1 * sin(radians(anglex)) + v2 * sin(radians(angley))
+    vt = sqrt(vx**2 + vy**2)
+    res =  str(format(vt,'0.2f'))+" m"
     return res
 
 def u1_6(params):
-    res = ""
+    v1 = float(params[1].res)
+    v2 = float(params[2].res)
+    anglex = 0
+    angley = float(params[0].res)
+
+    vx = v1 * cos(radians(anglex)) + v2 * cos(radians(angley))
+    vy = v1 * sin(radians(anglex)) + v2 * sin(radians(angley))
+    vt = sqrt(vx**2 + vy**2)
+    res =  str(format(vt,'0.2f'))+" N"
     return res
 
 def u1_7(params):
-    res = ""
+    v1 = float(params[0].res)
+    angle1 = float(params[1].res)
+    v2 = float(params[2].res)
+    angle2 = float(params[3].res)
+    v3 = float(params[4].res)
+    angle3 = float(params[5].res)
+
+    vx1 = v1 * cos(radians(angle1))
+    vx2 = v2 * cos(radians(angle2))
+    vx3 = v3 * cos(radians(angle3))
+  
+    vy1 = v1 * sin(radians(angle1))
+    vy2 = v2 * sin(radians(angle2))
+    vy3 = v3 * sin(radians(angle3))
+ 
+    res =  " Vx1 = "+str(format(vx1,'0.2f'))+" Vy1 = "+str(format(vy1,'0.2f'))+ "Vx2 = "+str(format(vx2,'0.2f'))+" Vy2 = "+str(format(vy2,'0.2f'))+" Vx3 = "+str(format(vx3,'0.2f'))+" Vy3 = "+str(format(vy3,'0.2f'))
     return res
 
 
