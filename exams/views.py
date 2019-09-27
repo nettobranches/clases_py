@@ -108,11 +108,11 @@ def setRandom(pregunta_list, ts, materia, unidad):
 
 def resultados(request, timestamp):
     meta = RespuestaAleatoria.objects.filter(marca = timestamp)
-    print('meta', meta[0].pregunta.unidad, meta[0].pregunta.unidad.materia, meta[0].pregunta.unidad.numero)
-    materia = meta[0].pregunta.unidad.materia
+    print('meta',timestamp, meta[0].pregunta.unidad, "materia", meta[0].pregunta.unidad.materia.nombre, "unidad numero", meta[0].pregunta.unidad.numero)
+    materia = meta[0].pregunta.unidad.materia.nombre
     unidad = meta[0].pregunta.unidad.numero
-    materia = "fisica"
-    unidad = "2"
+    # materia = "fisica"
+    # unidad = "2"
 
     pregunta_list = Pregunta.objects.filter(unidad__numero = unidad, unidad__materia__nombre = materia)
     print('pregunta_list', pregunta_list)

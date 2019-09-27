@@ -1,0 +1,238 @@
+from sympy import *
+from sympy.parsing.latex import parse_latex
+from sympy.physics import units as u
+from math import *
+
+
+# constantes
+e0 = 8.85*10**-12
+
+
+def fisicaMethod(unidad, strMethod, params, pregunta):
+    print("strmethod", strMethod);
+    res = ""
+    # unidad 1
+    if (strMethod == "u1_1"):
+        res =u1_1(params)
+    elif(strMethod == "u1_2"):
+        res = u1_2(params)
+    elif(strMethod == "u1_3"):
+        res = u1_3(params)
+    elif(strMethod == "u1_4"):
+        res = u1_4(params)
+    elif(strMethod == "u1_5"):
+        res = u1_5(params)
+    elif(strMethod == "u1_6"):
+        res = u1_6(params)
+    elif(strMethod == "u1_7"):
+        res = u1_7(params)
+    # unidad 2
+    elif (strMethod == "u2_1"):
+        res =u2_1(params)
+    elif(strMethod == "u2_2"):
+        res = u2_2(params)
+    elif(strMethod == "u2_3"):
+        res = u2_3(params)
+    elif(strMethod == "u2_4"):
+        res = u2_4(params)
+    elif(strMethod == "u2_5"):
+        res = u2_5(params)
+    elif(strMethod == "u2_6"):
+        res = u2_6(params)
+    elif(strMethod == "u2_7"):
+        res = u2_7(params)
+    elif(strMethod == "u2_8"):
+        res = u2_8(params)
+    elif(strMethod == "u2_9"):
+        res = u2_9(params)
+    elif(strMethod == "u2_10"):
+        res = u2_10(params)
+    elif(strMethod == "u2_11"):
+        res = u2_11(params)
+
+    return res
+
+# unidad 1
+def u1_1(params):
+    res = ""
+    return res
+
+def u1_2(params):
+    res = ""
+    return res
+
+def u1_3(params):
+    res = ""
+    return res
+
+def u1_4(params):
+    res = ""
+    return res
+
+def u1_5(params):
+    res = ""
+    return res
+
+def u1_6(params):
+    res = ""
+    return res
+
+def u1_7(params):
+    res = ""
+    return res
+
+
+# unidad 2
+def u2_1(params):
+    w = 1
+    angle = 1
+    if(len(params) == 2):
+        w = float(params[0].res)
+        angle = float(params[1].res)
+    n = w * cos(radians(angle))
+    f = w * sin(radians(angle))
+    res = " \\( \\begin{align*}"\
+    " N = W_{x} &= w * \\cos(a) = " + str(w) + " * \\cos("+str(angle)+ ") = " + str(format(n,'0.2f')) +"N"\
+    "\\\\"\
+    " F = W_{y} &= w * \\sin(a) = " + str(w) + " * \\sin("+str(angle)+ ") = " + str(format(f,'0.2f')) +"N"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def u2_2(params):
+    ty = 1
+    angle = 1
+    if( len(params) == 2 ):
+        ty = float(params[0].res)/2
+        angle = 90 - float(params[1].res)/2
+    t = ty / sin(radians(angle))
+    res = " \\( T = \\dfrac{ T_{y} }{sin{"+str(angle)+"º} } = "\
+    " \\dfrac{ "+str(ty)+" }{sin{"+str(angle)+"º} } ="\
+    ""+ str(format(t,'0.2f')) +"N \\)"
+    return res
+
+def u2_3(params):
+    # f = float(params[0].res)
+    # w = float(params[1].res)
+    # n = float(params[2].res)
+    f = 40.0
+    w = 600.0
+    n = 10.0
+    ms = f/w
+    mk = n/w
+    res = " \\(  m_{s} = \\frac{"+str(f)+"}{"+str(w)+"} = " + str(format(ms,'0.4f')) +"\\; "\
+    "m_{k} = \\frac{"+str(n)+"}{"+str(w)+"} = "+ str(format(mk,'0.4f')) +" \\)"
+    return res
+
+def u2_4(params):
+    n = 1
+    if( len(params) == 2):
+        n = float(params[0].res)
+    ms = 0.7
+    mk = 0.4
+    fs = ms*n
+    fk = mk*n
+    res = " \\( F_{s} = "+ str(format(fs,'0.1f')) +"N \\; F_{k}="+ str(format(fk,'0.1f')) +"N\\)"
+    return res
+
+def u2_5(params):
+    w = 60
+    angle = 90 - 43
+    wx = w * sin(radians(angle))
+    n = w * cos(radians(angle))
+    res = " \\( N = "+str(w)+"*\\sin("+str(angle)+") = "+str(format(n,'0.1f'))+"N \\, W_{x} = "+str(w)+"*cos("+str(angle)+") = "+str(format(wx,'0.1f'))+ "N \\)"
+    return res
+
+def u2_6(params):
+    d = 1
+    f = 1
+    if( len(params) == 2):
+        d = float(params[0].res)/100
+        f = float(params[1].res)
+    torque_90 = f * d * sin(radians(90))
+    torque_60 = f * d * sin(radians(60))
+    torque_30 = f * d * sin(radians(30))
+    torque_0 = f * d * sin(radians(0))
+    res = " \\( \\begin{align*}"\
+    "t_{90º} &= "+ str(format(torque_90,'0.0f')) +"N m"\
+    "\\\\"\
+    "t_{60º} &= "+ str(format(torque_60,'0.0f')) +"N m"\
+    "\\\\"\
+    "t_{30º} &= "+ str(format(torque_30,'0.0f')) +"N m"\
+    "\\\\"\
+    "t_{0º} &= "+ str(format(torque_0,'0.0f')) +"N m"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def u2_7(params):
+    sum_torque = 30*0 + 15*4 - 20*9
+    res = " \\( t ="+str(format(sum_torque,'0.1f'))+ " N m \\)"
+    return res
+
+def u2_8(params):
+    v = 1
+    hrs = 1
+    mn = 1
+    if( len(params) == 2):
+        v = float(params[0].res)
+        hrs = float(params[1].res)
+        mn = float(params[2].res)/float(60)
+    # print( "min",params[2].res, float(params[2].res)/float(60) )
+    t = hrs + mn
+    x = v*t
+    res = " \\( s = "+str(v)+" * "+str(t)+" ="+ str(format(x,'0.1f')) +" mi \\)"
+    return res
+
+def u2_9(params):
+    x = 1
+    vf = 1
+    if(len(params) == 2):
+        x = float(params[0].res)/12
+        vf = float(params[1].res)
+    vi = 0
+    a = (vf**2 - vi**2)/2*x
+    t = 2*x/(vi + vf)
+    res = " \\( \\begin{align*}"\
+    "a &= \\dfrac{"+str(vf)+"^2 - "+str(vi)+"^2}{ 2*"+str(x)+"} = "+ str(a) +" ft/s^2"\
+    "\\\\"\
+    "t &= "+ str(format(t,'0.4f')) +"s"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def u2_10(params):
+    x = 1
+    if(len(params) == 1):
+        x = -float(params[0].res)
+    g = -9.8
+    v0 = 0
+    # t = sqrt(x*2/g)
+    t = 1
+    vf = v0 + g*t
+    res = " \\( \\begin{align*}"\
+    "t &= "+ str(format(t,'0.2f')) +" s"\
+    "\\\\"\
+    "v_{f} &= "+ str(format(vf,'0.1f')) +"m/s"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def u2_11(params):
+    v0x = 1
+    t = 1
+    if(len(params) == 2):
+        v0x = float(params[0].res)
+        t = float(params[1].res)
+    v0y = 0
+    g = -9.8
+    x = v0x*t
+    y = v0y + 1/2 * g * t**2
+    res = " \\( "+"\\)"
+    res = " \\( \\begin{align*}"\
+    "x &= "+ str(x) +" m"\
+    "\\\\"\
+    "y &= "+ str(format(y,'0.4f')) +"m"\
+    "\\end{align*}"\
+    "\\)"
+    return res
