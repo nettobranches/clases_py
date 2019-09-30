@@ -132,9 +132,11 @@ def energia_potencial_r(params):
 
 def diferencia_potencial_v(params):
     q1 = 45*10**-9
-    r1 = float(params[0].res)*10**-3
+    
     q2 = -float(params[1].res)*10**-9
     r2 = float(params[2].res)*10**-3
+    r1 = float(params[0].res)*10**-3 - float(params[2].res)*10**-3
+
     v1 = k*q1/r1
     v2 = k*q2/r2
     v = v1+v2
