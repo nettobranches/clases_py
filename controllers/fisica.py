@@ -65,7 +65,7 @@ def u1_1(params):
 def u1_2(params):
     c = float(params[0].res)
     d = float(params[1].res)
-    i3 = 0.61 #cm3
+    i3 = 0.061 #cm3
     inc =0.03937 #mm 
     ic = c * i3
     ind = d * inc
@@ -106,11 +106,11 @@ def u1_5(params):
 def u1_6(params):
     v1 = float(params[1].res)
     v2 = float(params[2].res)
-    anglex = 0
-    angley = float(params[0].res)
+    angle1 = 0
+    angle2 = float(params[0].res)
 
-    vx = v1 * cos(radians(anglex)) + v2 * cos(radians(angley))
-    vy = v1 * sin(radians(anglex)) + v2 * sin(radians(angley))
+    vx = v1 * cos(radians(angle1)) + v2 * cos(radians(angle2))
+    vy = v1 * sin(radians(angle1)) + v2 * sin(radians(angle2))
     vt = sqrt(vx**2 + vy**2)
     res =  str(format(vt,'0.2f'))+" N"
     return res

@@ -100,7 +100,7 @@ def intensidad_campo_electrico_sum_e(params):
     q2 = float(params[2].res)*10**-6
     e1 = k*q1/r**2
     e2 = k*q2/r**2
-    er = e1 + e2
+    er = e1 - e2
     res = " \\( \\begin{align*}"\
     " E1 &= \\dfrac{ k \\cdot q1 }{ r^2 } "\
     "\\\\"\
@@ -112,7 +112,7 @@ def intensidad_campo_electrico_sum_e(params):
     "\\\\"\
     " E2 &= \\dfrac{ " + str(format(k,'0.2E')) + " \\cdot " + str(format(q2,'0.2E')) + " }{ " + str(format(r,'0.3f')) + "^2 } = "+str(format(e2,'0.2E')) +" C"\
     "\\\\"\
-    " E &= " + str(format(e1,'0.2E')) + " + " + str(format(e2,'0.2E')) + " = "+str(format(er,'0.2E')) +" C"\
+    " E &= " + str(format(e1,'0.2E')) + " - " + str(format(e2,'0.2E')) + " = "+str(format(er,'0.2E')) +" C"\
     "\\end{align*}"\
     "\\)"
     return res
