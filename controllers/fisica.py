@@ -41,14 +41,19 @@ def fisicaMethod(unidad, strMethod, params, pregunta):
         res = u2_6(params)
     elif(strMethod == "u2_7"):
         res = u2_7(params)
-    elif(strMethod == "u2_8"):
-        res = u2_8(params)
-    elif(strMethod == "u2_9"):
-        res = u2_9(params)
-    elif(strMethod == "u2_10"):
-        res = u2_10(params)
-    elif(strMethod == "u2_11"):
-        res = u2_11(params)
+    # unidad 3
+    elif (strMethod == "res_06_07"):
+        res =res_06_07(params)
+    elif (strMethod == "res_06_16"):
+        res =res_06_16(params)
+    elif (strMethod == "res_06_21"):
+        res =res_06_21(params)
+    elif (strMethod == "res_06_28"):
+        res =res_06_28(params)
+    elif (strMethod == "res_06_37"):
+        res =res_06_37(params)
+    elif (strMethod == "res_06_40"):
+        res =res_06_40(params)
 
     return res
 
@@ -224,11 +229,11 @@ def u2_7(params):
     res = " \\( t ="+str(format(sum_torque,'0.1f'))+ " N m \\)"
     return res
 
-def u2_8(params):
+def res_06_07(params):
     v = 1
     hrs = 1
     mn = 1
-    if( len(params) == 2):
+    if( len(params) > 0 ):
         v = float(params[0].res)
         hrs = float(params[1].res)
         mn = float(params[2].res)/float(60)
@@ -238,44 +243,44 @@ def u2_8(params):
     res = " \\( s = "+str(v)+" * "+str(t)+" ="+ str(format(x,'0.1f')) +" mi \\)"
     return res
 
-def u2_9(params):
+def res_06_16(params):
     x = 1
     vf = 1
-    if(len(params) == 2):
+    if(len(params) > 0):
         x = float(params[0].res)/12
         vf = float(params[1].res)
     vi = 0
-    a = (vf**2 - vi**2)/2*x
+    a = (vf**2 - vi**2)/(2*x)
     t = 2*x/(vi + vf)
     res = " \\( \\begin{align*}"\
-    "a &= \\dfrac{"+str(vf)+"^2 - "+str(vi)+"^2}{ 2*"+str(x)+"} = "+ str(a) +" ft/s^2"\
+    "a &= \\dfrac{"+str(vf)+"^2 - "+str(vi)+"^2}{ 2*"+str(x)+"} = "+ str(format(a,'0.2E')) +" ft/s^2"\
     "\\\\"\
     "t &= "+ str(format(t,'0.4f')) +"s"\
     "\\end{align*}"\
     "\\)"
     return res
 
-def u2_10(params):
+def res_06_21(params):
     x = 1
     if(len(params) == 1):
-        x = -float(params[0].res)
+        x = float(params[0].res)
     g = -9.8
     v0 = 0
     # t = sqrt(x*2/g)
-    t = 1
+    t = sqrt( -x * 2 /-9.8)
     vf = v0 + g*t
     res = " \\( \\begin{align*}"\
-    "t &= "+ str(format(t,'0.2f')) +" s"\
+    "t &= \\sqrt{-"+str(x)+"m * \\dfrac{2}{"+str(g)+"m/s^2 }} = " + str(format(t,'0.2f')) +" s"\
     "\\\\"\
-    "v_{f} &= "+ str(format(vf,'0.1f')) +"m/s"\
+    "v_{f} &= 0 + "+str(g)+"m/s^2 x "+str(format(t,'0.2f'))+"s  = "+ str(format(vf,'0.1f')) +"m/s"\
     "\\end{align*}"\
     "\\)"
     return res
 
-def u2_11(params):
+def res_06_28(params):
     v0x = 1
     t = 1
-    if(len(params) == 2):
+    if(len(params) > 0):
         v0x = float(params[0].res)
         t = float(params[1].res)
     v0y = 0
@@ -284,9 +289,55 @@ def u2_11(params):
     y = v0y + 1/2 * g * t**2
     res = " \\( "+"\\)"
     res = " \\( \\begin{align*}"\
-    "x &= "+ str(x) +" m"\
+    "x &= "+str(v0x)+"m/s * "+str(t)+"s = "+ str(x) +" m"\
     "\\\\"\
-    "y &= "+ str(format(y,'0.4f')) +"m"\
+    "y &= "+str(v0y)+" + \\dfrac{"+str(g)+"m/s^2 * ("+str(t)+"s)^2}{2} = "+ str(format(y,'0.4f')) +"m"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+def res_06_37(params):
+    v = 1
+    angle = 37
+    t = 2
+    g=-32
+    if(len(params) > 0):
+        v = float(params[0].res)
+        # angle = float(params[1].res)
+    # v = 120
+    v0x = v * cos(radians(angle))
+    v0y = v * sin(radians(angle))
+
+    x = v0x * t
+    y = v0y*t + 1/2*g*t**2
+
+    res = " \\( \\begin{align*}"\
+    "x &= "+str(v)+"m/s * \\cos("+str(angle)+") * "+str(t)+"s = "+ str(x) +" ft"\
+    "\\\\"\
+    "y &= "+str(v)+"m/s * \\sin("+str(angle)+") * "+str(t)+"s + \\dfrac{1}{2} * "+str(g)+"m/s^2 * ("+str(t)+"s)^2 = "+ str(format(y,'0.4f')) +" ft"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
+
+def res_06_40(params):
+    v = 1
+    angle = 32
+    g = -9.8
+    if(len(params) > 0):
+        v = float(params[0].res)
+    # v=35
+    v0y = v * sin(radians(angle))
+    vfy = 0
+
+    t = -v0y/g
+    y = v0y*t + 1/2*g*t**2
+    
+    res = " \\( "+"\\)"
+    res = " \\( \\begin{align*}"\
+    "t &= \\dfrac{-"+str(v0y)+"m/s}{ "+str(g)+"m/s^2} = "+ str(t) +" s"\
+    "\\\\"\
+    "y &= "+str(v0y)+"m/s * "+str(t)+"s" + "\\dfrac{1}{2}"+str(g)+"m/s^2 * ("+str(t)+"s)^2 = "+ str(format(y,'0.4f')) +"m"\
     "\\end{align*}"\
     "\\)"
     return res

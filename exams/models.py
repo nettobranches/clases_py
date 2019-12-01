@@ -78,7 +78,7 @@ class RespuestaOriginal(models.Model):
     mostrar = models.BooleanField(default=True)
 
     def __str__(self):
-        return str(self.variable)+" = "+str(self.res)+" : "+self.pregunta.pregunta_txt+"  "+self.generate_method
+        return str(self.pregunta.unidad) +" "+ str(self.variable)+" = "+str(self.res)+" : "+self.pregunta.pregunta_txt+"  "+self.generate_method
 
     def generate_res(self):
         res = doRandomMethod(self.generate_method)
@@ -109,4 +109,10 @@ class RespuestaOrden(models.Model):
 
     def __str__(self):
         return str(self.orden)+" = "+str(self.pregunta.pregunta_txt)+" ( "+self.timestamp+")"
+
+class PreguntaRescate(models.Model):
+    pregunta_txt = models.CharField(max_length=400)
+
+    def __str__(self):
+        return self.pregunta_txt
 
