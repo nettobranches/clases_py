@@ -27,6 +27,8 @@ def emyoMethod(unidad, strMethod, params, pregunta):
     # unidad 2
     elif (strMethod == "carga_cv"):
         res = carga_cv(params)
+    elif (strMethod == "carga_cv_a"):
+        res = carga_cv_a(params)
     elif(strMethod == "capacitancia_qv"):
         res = capacitancia_qv(params)
     elif(strMethod == "capacitancia_e0ea"):
@@ -160,7 +162,7 @@ def carga_cv(params):
     res = " \\( \\begin{align*}"\
     " q &= c \\cdot v "\
     "\\\\"\
-    " q &= " + str(format(c,'0.6f')) + " \\cdot " + str(v) + " = "+str(format(q,'0.6f')) +"C"\
+    " q &= " + str(format(c,'0.6f')) + " \\cdot " + str(v) + " = "+str(format(q,'0.2E')) +"C"\
     "\\end{align*}"\
     "\\)"
     return res
@@ -177,6 +179,24 @@ def capacitancia_qv(params):
     "\\)"
     return res
 
+def carga_cv_a(params):
+    c = float(params[0].res)*10**-6
+    d = d = float(params[1].res)*10**-3
+    v = float(params[2].res)
+    q = c*v
+    A = c*d/e0
+    res = " \\( \\begin{align*}"\
+    " q &= c \\cdot v "\
+    "\\\\"\
+    " q &= " + str(format(c,'0.6f')) + " \\cdot " + str(v) + " = "+str(format(q,'0.2E')) +"C"\
+    "\\\\"\
+    " A &= \\dfrac{ c \\cdot d }{ e_{0} } "\
+    "\\\\"\
+    " A &= \\dfrac{ " + str(format(c,'0.6f')) + " \\cdot " + str(format(d,'0.6f')) + " }{ " + str(format(e0,'0.2E')) + " }  = " + str(format(A,'0.2f')) + " m2"\
+    "\\end{align*}"\
+    "\\)"
+    return res
+
 def capacitancia_e0ea(params):
     d = float(params[0].res)*10**-3
     A = float(params[1].res)
@@ -185,20 +205,21 @@ def capacitancia_e0ea(params):
     "c &= e_{0} \\cdot \\dfrac{ A }{ d }"\
     "\\\\"\
     "c &= "+str(format(e0,'0.2E'))+" \\cdot \\dfrac{"+ str(A) +"}{"+ str(d) +"} = "+ str(format(c,'0.2E')) +"F"\
+    "\\\\"\
     "\\end{align*}"\
     "\\)"
     return res
 
 def capacitancia_serie3(params):
-    c1 = float(params[0].res)
-    c2 = float(params[1].res)
-    c3 = float(params[2].res)
+    c1 = float(params[0].res)*10**-6
+    c2 = float(params[1].res)*10**-6
+    c3 = float(params[2].res)*10**-6
     ct = 1/( 1/c1 + 1/c2 + 1/c3 )
     # return " \\( \dfrac{ 1 }{ ct } = \dfrac{ 1 }{ c_{1} } +\dfrac{ 1 }{ c_{2} } + \dfrac{ 1 }{ c_{3} } = "+ str(ct) + "\\)"
     res = " \\( \\begin{align*}"\
     "\dfrac{ 1 }{ ct } &= \dfrac{ 1 }{ c_{1} } +\dfrac{ 1 }{ c_{2} } + \dfrac{ 1 }{ c_{3} }"\
     "\\\\"\
-    "\dfrac{ 1 }{ ct } &= \dfrac{ 1 }{"+str(c1)+"} +\dfrac{ 1 }{"+str(c2)+"} + \dfrac{ 1 }{"+str(c3)+"} = "+ str(format(ct,'0.2E')) +"F"\
+    "ct &= \dfrac{ 1 }{ \dfrac{ 1 }{"+str(c1)+"} +\dfrac{ 1 }{"+str(c2)+"} + \dfrac{ 1 }{"+str(c3)+"} } = "+ str(format(ct,'0.2E')) +"F"\
     "\\end{align*}"\
     "\\)"
     return res
@@ -210,7 +231,7 @@ def energiapotencial_cv(params):
     res = " \\( \\begin{align*}"\
     "pe &= \dfrac{ 1 }{ 2 } \cdot c \cdot v^2"\
     "\\\\"\
-    "pe &= \dfrac{ 1 }{ 2 } \cdot "+str(format(c,"0.6f"))+" \cdot "+str(v)+"^2 ="+ str(pe) + "W"\
+    "pe &= \dfrac{ 1 }{ 2 } \cdot "+str(format(c,"0.6f"))+" \cdot "+str(v)+"^2 ="+ str(format(pe, "0.2E")) + "W"\
     "\\end{align*}"\
     "\\)"
     return res
@@ -224,7 +245,7 @@ def cap_serie_paralelo(params):
     res = " \\( \\begin{align*}"\
     "c_{1,2} &= c_{1} + c_{2}"\
     "\\\\"\
-    "c_{1,2} &="+ str(format(c1,"0.6f")) +"+"+ str(format(c2,"0.6f")) +" = "+ str(format(ct_paralelo,'0.6f')) + "F"\
+    "c_{1,2} &="+ str(format(c1,"0.6f")) +"+"+ str(format(c2,"0.6f")) +" = "+ str(format(ct_paralelo,'0.2E')) + "F"\
     "\\\\"\
     "\\dfrac{ 1 }{ ct } &= \\dfrac{ 1 }{ c_{1,2} } + \\dfrac{ 1 }{ c_{3} }"\
     "\\\\"\

@@ -179,13 +179,14 @@ def u2_3(params):
 
 def u2_4(params):
     n = 1
-    if( len(params) == 2):
+    if( len(params) > 0):
         n = float(params[0].res)
     ms = 0.7
     mk = 0.4
     fs = ms*n
     fk = mk*n
-    res = " \\( F_{s} = "+ str(format(fs,'0.1f')) +"N \\; F_{k}="+ str(format(fk,'0.1f')) +"N\\)"
+    res = " \\( F_{s} = "+str(n)+"N * "+ str(format(fs,'0.1f')) +"N \\; F_{k}="+ str(n)+"N * "+str(format(fk,'0.1f')) +"N\\)"\
+    " \\( F_{s} = "+ str(format(fs,'0.1f')) +"N \\; F_{k}="+ str(format(fk,'0.1f')) +"N\\)"
     return res
 
 def u2_5(params):
