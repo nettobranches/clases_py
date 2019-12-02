@@ -1,6 +1,7 @@
 from sympy import *
 from sympy.parsing.latex import parse_latex
 from sympy.physics import units as u
+from math import *
 
 
 # constantes
@@ -57,6 +58,8 @@ def emyoMethod(unidad, strMethod, params, pregunta):
     elif(strMethod == "kirchoff_ley2"):
         res = kirchoff_ley2(params)
     # unidad 4
+    elif(strMethod == "res_29_02"):
+        res = res_29_02(params)
     elif(strMethod == "res_29_06"):
         res = res_29_06(params)
     elif(strMethod == "res_29_08"):
@@ -75,6 +78,8 @@ def emyoMethod(unidad, strMethod, params, pregunta):
         res = res_30_05(params)
     elif(strMethod == "res_30_06"):
         res = res_30_06(params)
+
+    return res
   
 
 # unidad 1    
@@ -426,33 +431,175 @@ def kirchoff_ley2(params):
     return res
 
 def res_29_02(params):
-    res = str(-5.68)+"mWb"
+    d = 30 /100
+    B = .6
+    angle = 60
+
+    A = pi *d**2/4
+
+    phi_0 = B * A * sin(radians(90))
+    phi = B * A * sin(radians(angle))
+
+    d_phi = phi - phi_0
+
+    res = " \\( \\begin{align*}"\
+    " 0 "\
+    "\\\\"\
+    " \\phi &= "+str(phi)+" - "+str(phi_0)+" = "+str(d_phi)+" Wb "\
+    "\\end{align*}"\
+    "\\)"
     return res
 
 def res_29_06(params):
-    res = str(-5.68)+"mWb"
+    b = 25/100
+    h = 15/100
+    B = 0.6
+    phi = 0.015
+    A = b * h
+
+    s =  phi/(B * A) 
+    angle = degrees(asin(s))
+
+    res = " \\( \\begin{align*}"\
+    " 0 "\
+    "\\\\"\
+    " \\theta &=  \\dfrac{"+str(phi)+"}{"+str(B)+" * "+str(A)+"} = "+str(angle)+" "\
+    "\\end{align*}"\
+    "\\)"
     return res
 
 def res_29_08(params):
-    pass
+    e = 1.6E-19
+    q = 2*e
+    B = 0.12
+    angle = 35
+    v = 3.6E6
+    F = q * v * B * sin(angle)
+
+    res = " \\( \\begin{align*}"\
+    " 0 "\
+    "\\\\"\
+    " F &= "+str(q)+"*"+str(v)+"*"+str(B)+"\\sin("+str(angle)+") = "+str(F)+" N "\
+    "\\end{align*}"\
+    "\\)"
+    return res
 
 def res_29_10(params):
-    pass
+    e = 1.6E-19
+    q = e
+    v = 4E6
+    B = 0.4
+
+    F = q*v*B
+
+
+    res = " \\( \\begin{align*}"\
+    " 0 "\
+    "\\\\"\
+    " F &= "+str(q)+"*"+str(v)+"*"+str(B)+"="+str(F)+" N "\
+    "\\end{align*}"\
+    "\\)"
+    return res
 
 def res_29_15(params):
-    pass
+
+    I = 6
+    angle = 35
+    B = 40/1000
+    L = 1 / 100
+
+    F = I * L * B * sin(angle)
+
+    res = " \\( \\begin{align*}"\
+    " 0 "\
+    "\\\\"\
+    " F &= "+str(I)+"*"+str(L)+"*"+str(B)+"* \\sin("+str(angle)+") = "+str(F)+" N "\
+    "\\end{align*}"\
+    "\\)"
+    return res
 
 def res_29_17(params):
-    pass
+
+    F = 2
+    B = 2.3
+    L = 80/1000
+    angle = 53
+
+    I  = F / (B * L * sin(angle))
+    res = " \\( \\begin{align*}"\
+    " 0 "\
+    "\\\\"\
+    " I &= \\dfrac{"+str(F)+"}{"+str(B)+" * "+str(L)+" * \\sin("+str(angle)+")} = "+str(I)+" A "\
+    "\\end{align*}"\
+    "\\)"
+    return res
 
 def res_29_20(params):
-    pass
+    
+    mu_0 = 4*pi*1E-7
+    L = 8/1000
+    I = 14
+
+    B = (mu_0 * I )/(2 * pi * L)
+
+    res = " \\( \\begin{align*}"\
+    " 0 "\
+    "\\\\"\
+    " B &= \\dfrac{"+str(mu_0)+"*"+str(I)+"}{2\\pi*"+str(L)+"} = "+str(B)+" T "\
+    "\\end{align*}"\
+    "\\)"
+    return res
 
 def res_30_02(params):
-    pass
+
+    t = 2.3
+    N = 100
+    B = 4
+    A = 20*1E-4
+    angle = 0
+
+    I = t/(N*B*A*cos(radians(angle)) )
+
+    res = " \\( \\begin{align*}"\
+    " 0 "\
+    "\\\\"\
+    " I &= \\dfrac{"+str(t)+"}{"+str(N)+"*"+str(B)+"*"+str(A)+"* \\cos("+str(angle)+")} = "+str(I)+" A "\
+    "\\end{align*}"\
+    "\\)"
+    return res
 
 def res_30_05(params):
-    pass
+
+    t = 0.5
+    N = 100
+    I = 9
+    A = 84*1E-4
+    angle = 0
+
+    B = t/(N*I*A*cos(radians(angle)) )
+
+    res = " \\( \\begin{align*}"\
+    " 0 "\
+    "\\\\"\
+    " B &= \\dfrac{"+str(t)+"}{"+str(N)+"*"+str(I)+"*"+str(A)+"* \\cos("+str(angle)+")} = "+str(B)+" T "\
+    "\\end{align*}"\
+    "\\)"
+    return res
 
 def res_30_06(params):
-    pass
+
+    t = 0.8
+    N = 800
+    B = 3/1000
+    A = 0.4
+    angle = 90
+
+    I = t/(N*B*A*sin(radians(angle)) )   
+
+    res = " \\( \\begin{align*}"\
+    " 0 "\
+    "\\\\"\
+    " I &= \\dfrac{"+str(t)+"}{"+str(N)+"*"+str(B)+"*"+str(A)+"* \\sin("+str(angle)+")} = "+str(I)+" A "\
+    "\\end{align*}"\
+    "\\)"
+    return res
