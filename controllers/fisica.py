@@ -253,9 +253,11 @@ def res_06_16(params):
     a = (vf**2 - vi**2)/(2*x)
     t = 2*x/(vi + vf)
     res = " \\( \\begin{align*}"\
+        "x &= "+str(x)+"ft"\
+    "\\\\"\
     "a &= \\dfrac{"+str(vf)+"^2 - "+str(vi)+"^2}{ 2*"+str(x)+"} = "+ str(format(a,'0.2E')) +" ft/s^2"\
     "\\\\"\
-    "t &= "+ str(format(t,'0.4f')) +"s"\
+    "t &= \\dfrac{ 2*" +str(x)+ "}{"+str(vi)+"+"+str(vf)+"}" + str(format(t,'0.4f')) +"s"\
     "\\end{align*}"\
     "\\)"
     return res
@@ -312,6 +314,10 @@ def res_06_37(params):
     y = v0y*t + 1/2*g*t**2
 
     res = " \\( \\begin{align*}"\
+    "v0x &= "+str(v)+"m/s * \\cos("+str(angle)+")  = "+ str(v0x) +" ft/s"\
+    "\\\\"\
+    "v0y &= "+str(v)+"m/s * \\sin("+str(angle)+") = "+str(v0y)+" ft/s"\
+    "\\\\"\
     "x &= "+str(v)+"m/s * \\cos("+str(angle)+") * "+str(t)+"s = "+ str(x) +" ft"\
     "\\\\"\
     "y &= "+str(v)+"m/s * \\sin("+str(angle)+") * "+str(t)+"s + \\dfrac{1}{2} * "+str(g)+"m/s^2 * ("+str(t)+"s)^2 = "+ str(format(y,'0.4f')) +" ft"\
@@ -333,8 +339,9 @@ def res_06_40(params):
     t = -v0y/g
     y = v0y*t + 1/2*g*t**2
     
-    res = " \\( "+"\\)"
     res = " \\( \\begin{align*}"\
+    "v0y &= "+str(v)+"m/s * \\sin("+str(angle)+") = "+str(v0y)+" m/s"\
+    "\\\\"\
     "t &= \\dfrac{-"+str(v0y)+"m/s}{ "+str(g)+"m/s^2} = "+ str(t) +" s"\
     "\\\\"\
     "y &= "+str(v0y)+"m/s * "+str(t)+"s" + "\\dfrac{1}{2}"+str(g)+"m/s^2 * ("+str(t)+"s)^2 = "+ str(format(y,'0.4f')) +"m"\
