@@ -56,8 +56,26 @@ def emyoMethod(unidad, strMethod, params, pregunta):
         res = resistencia_mixta(params)
     elif(strMethod == "kirchoff_ley2"):
         res = kirchoff_ley2(params)
-
-    return res
+    # unidad 4
+    elif(strMethod == "res_29_06"):
+        res = res_29_06(params)
+    elif(strMethod == "res_29_08"):
+        res = res_29_08(params)
+    elif(strMethod == "res_29_10"):
+        res = res_29_10(params)
+    elif(strMethod == "res_29_15"):
+        res = res_29_15(params)
+    elif(strMethod == "res_29_17"):
+        res = res_29_17(params)
+    elif(strMethod == "res_29_20"):
+        res = res_29_20(params)
+    elif(strMethod == "res_30_02"):
+        res = res_30_02(params)
+    elif(strMethod == "res_30_05"):
+        res = res_30_05(params)
+    elif(strMethod == "res_30_06"):
+        res = res_30_06(params)
+  
 
 # unidad 1    
 def ley_coulomb_r(params):
@@ -406,3 +424,35 @@ def kirchoff_ley2(params):
     "\\end{align*}"\
     "\\)"
     return res
+
+def res_29_02(params):
+    res = str(-5.68)+"mWb"
+    return res
+
+def res_29_06(params):
+    res = str(-5.68)+"mWb"
+    return res
+
+def res_29_08(params):
+    pass
+
+def res_29_10(params):
+    pass
+
+def res_29_15(params):
+    pass
+
+def res_29_17(params):
+    pass
+
+def res_29_20(params):
+    pass
+
+def res_30_02(params):
+    pass
+
+def res_30_05(params):
+    pass
+
+def res_30_06(params):
+    pass
