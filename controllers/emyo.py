@@ -430,10 +430,12 @@ def kirchoff_ley2(params):
     "\\)"
     return res
 
+# unidad 3
+
 def res_29_02(params):
-    d = 30 /100
-    B = .6
-    angle = 60
+    d = float(params[0].res) /100
+    B = float(params[1].res)
+    angle = float(params[2].res)
 
     A = pi *d**2/4
 
@@ -451,10 +453,10 @@ def res_29_02(params):
     return res
 
 def res_29_06(params):
-    b = 25/100
-    h = 15/100
-    B = 0.6
-    phi = 0.015
+    b = float(params[0].res)/100
+    h = float(params[1].res)/100
+    B = float(params[2].res)
+    phi = float(params[3].res)
     A = b * h
 
     s =  phi/(B * A) 
@@ -470,11 +472,11 @@ def res_29_06(params):
 
 def res_29_08(params):
     e = 1.6E-19
-    q = 2*e
-    B = 0.12
-    angle = 35
-    v = 3.6E6
-    F = q * v * B * sin(angle)
+    q = float(params[0].res)*e
+    B = float(params[1].res)
+    angle = float(params[3].res)
+    v = float(params[2].res)*1E6
+    F = q * v * B * sin(radians(angle))
 
     res = " \\( \\begin{align*}"\
     " 0 "\
@@ -487,8 +489,8 @@ def res_29_08(params):
 def res_29_10(params):
     e = 1.6E-19
     q = e
-    v = 4E6
-    B = 0.4
+    v = float(params[0].res)*1E6
+    B = float(params[1].res)
 
     F = q*v*B
 
@@ -503,12 +505,12 @@ def res_29_10(params):
 
 def res_29_15(params):
 
-    I = 6
-    angle = 35
-    B = 40/1000
+    I = float(params[0].res)
+    angle = float(params[1].res)
+    B = float(params[2].res)
     L = 1 / 100
 
-    F = I * L * B * sin(angle)
+    F = I * L * B * sin(radians(angle))
 
     res = " \\( \\begin{align*}"\
     " 0 "\
@@ -521,11 +523,11 @@ def res_29_15(params):
 def res_29_17(params):
 
     F = 2
-    B = 2.3
+    B = float(params[1].res)
     L = 80/1000
-    angle = 53
+    angle = float(params[0].res)
 
-    I  = F / (B * L * sin(angle))
+    I  = F / ( B * L * sin(radians(angle)) )
     res = " \\( \\begin{align*}"\
     " 0 "\
     "\\\\"\
@@ -537,8 +539,8 @@ def res_29_17(params):
 def res_29_20(params):
     
     mu_0 = 4*pi*1E-7
-    L = 8/1000
-    I = 14
+    L = float(params[0].res)/1000
+    I = float(params[1].res)
 
     B = (mu_0 * I )/(2 * pi * L)
 
@@ -553,9 +555,9 @@ def res_29_20(params):
 def res_30_02(params):
 
     t = 2.3
-    N = 100
-    B = 4
-    A = 20*1E-4
+    N = float(params[0].res)
+    B = float(params[2].res)
+    A = float(params[1].res)*1E-4
     angle = 0
 
     I = t/(N*B*A*cos(radians(angle)) )
@@ -567,13 +569,13 @@ def res_30_02(params):
     "\\end{align*}"\
     "\\)"
     return res
-
+# removido
 def res_30_05(params):
 
     t = 0.5
-    N = 100
+    N = float(params[0].res)
     I = 9
-    A = 84*1E-4
+    A = float(params[1].res)*1E-4
     angle = 0
 
     B = t/(N*I*A*cos(radians(angle)) )
@@ -588,10 +590,10 @@ def res_30_05(params):
 
 def res_30_06(params):
 
-    t = 0.8
-    N = 800
-    B = 3/1000
-    A = 0.4
+    t = float(params[0].res)
+    N = float(params[1].res)
+    B = float(params[3].res)/1000
+    A = float(params[2].res)
     angle = 90
 
     I = t/(N*B*A*sin(radians(angle)) )   
